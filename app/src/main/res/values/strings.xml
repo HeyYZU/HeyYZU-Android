@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">HeyYZU</string>
+    <string name="app_name" translatable="false">HeyYZU</string>
+
+    <string name="placeholder_username">Portal Username</string>
+    <string name="placeholder_password">Portal Password</string>
+    <string name="btn_login">Login</string>
 </resources>

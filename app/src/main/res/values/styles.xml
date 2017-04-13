@@ -8,4 +8,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/colorStatusBar</item>
+    </style>
+
+    <style name="LoginEditText">
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:backgroundTint">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="LoginButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/retangle_hollow_round_8</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>
