@@ -39,9 +39,13 @@ captures/
 *.iml
 .idea/workspace.xml
 .idea/tasks.xml
-.idea/gradle.xml
 .idea/dictionaries
 .idea/libraries
+.idea/compiler.xml
+.idea/misc.xml
+.idea/copyright
+.idea/vcs.xml
+.idea/modules.xml
 
 # Keystore files
 *.jks
