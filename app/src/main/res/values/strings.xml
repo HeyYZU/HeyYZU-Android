@@ -20,4 +20,6 @@
     <string name="dialog_message_please_upgrade_client">APP version is too old. Please upgrade APP via Google Play.</string>
     <string name="dialog_message_yzu_server_error">Server(YZU) seems to have some problem!</string>
     <string name="dialog_message_server_error">Server seems to have some problem. We will fix it as soon as possible!</string>
+
+    <string name="toast_message_username_or_password_is_empty">Username or Password is EMPTY!</string>
 </resources>

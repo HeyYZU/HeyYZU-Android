@@ -13,4 +13,8 @@
     <string name="btn_no">否</string>
     <string name="btn_ok">確認</string>
     <string name="btn_yes">是</string>
+    <string name="dialog_message_server_error">伺服器好像出了點問題，我們的工程師會盡快修復它_(´ཀ`」 ∠)_</string>
+    <string name="dialog_message_yzu_server_error">學校伺服器又掛了啦(╯°□°）╯︵ ┻━┻</string>
+    <string name="dialog_title_oops">囧rz</string>
+    <string name="toast_message_username_or_password_is_empty">帳號或密碼沒填喔(つД`)ノ</string>
 </resources>
