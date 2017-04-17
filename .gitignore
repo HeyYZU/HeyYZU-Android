@@ -55,3 +55,6 @@ captures/
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+
+# Senstive NDK file
+tw_bingluen_heyyzu_constant_YZUSecret.cpp

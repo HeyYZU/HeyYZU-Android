@@ -6,14 +6,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tw.bingluen.heyyzu.R;
+import tw.bingluen.heyyzu.model.AccessToken;
+import tw.bingluen.heyyzu.model.PublicKey;
+import tw.bingluen.heyyzu.network.YZUAPIClient;
+import tw.bingluen.heyyzu.tool.RSACipher;
+import tw.bingluen.heyyzu.tool.RSAUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
     private ImageView logo;
     private ConstraintLayout formView;
+    private Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +33,25 @@ public class LoginActivity extends AppCompatActivity {
 
         logo = (ImageView) findViewById(R.id.logo);
         formView = (ConstraintLayout) findViewById(R.id.form_layout);
+        btnLogin = (Button) findViewById(R.id.btn_login);
+
 
         // Add keyboard observer
         keyboardShowObserver();
 
+        // Add ViewListener
+        setViewListener();
+    }
+
+    private void setViewListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String username = ((EditText) findViewById(R.id.username)).getText().toString();
+                final String password = ((EditText) findViewById(R.id.password)).getText().toString();
+                if (username.length() > 0 && password.length() > 0) getRSAKey();
+            }
+        });
     }
 
     private void keyboardShowObserver() {
@@ -61,6 +87,60 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getRSAKey() {
+        final Call<PublicKey> getRSAPubKey = YZUAPIClient.getRSAKey();
+        getRSAPubKey.enqueue(new Callback<PublicKey>() {
+            @Override
+            public void onResponse(Call<PublicKey> call, Response<PublicKey> response) {
+                if(response.isSuccessful()) {
+                    try {
+                        doLogin(RSAUtils.genEncryptorFromPublicKey(response.body()));
+                    } catch (Exception e) {
+
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PublicKey> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void doLogin(RSACipher rsaCipher) throws Exception {
+        final String username = ((EditText) findViewById(R.id.username)).getText().toString();
+        final String password = ((EditText) findViewById(R.id.password)).getText().toString();
+
+        final Call<AccessToken> getToken = YZUAPIClient.getAccessToken(
+                rsaCipher.getEncryptTextOnBase64(username),
+                rsaCipher.getEncryptTextOnBase64(password)
+        );
+
+        getToken.enqueue(new Callback<AccessToken>() {
+            @Override
+            public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                if (response.isSuccessful() && response.body().getToken() != null) {
+                    saveAccessToken(response.body());
+                } else {
+                    // login fail
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AccessToken> call, Throwable t) {
+                // request fail
+            }
+        });
+
+    }
+
+    protected void saveAccessToken(AccessToken accessToken) {
+        // Save accessToken
     }
 
     protected void keyboardDidShow(int currentKeyboardHeight) {
