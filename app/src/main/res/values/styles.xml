@@ -23,7 +23,7 @@
 
     <style name="LoginButton">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@drawable/retangle_hollow_round_8</item>
+        <item name="android:background">@drawable/rectangle_hollow_round_8</item>
         <item name="android:textSize">18sp</item>
     </style>
 
