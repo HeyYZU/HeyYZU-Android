@@ -79,7 +79,11 @@ public class SimpleDialogFragment extends DialogFragment {
         rightButton.setText(rightBtnRes);
 
         final Button leftButton = (Button) rootView.findViewById(R.id.btn_left);
-        leftButton.setText(leftBtnRes);
+        if (enableLeftBtn) {
+            leftButton.setText(leftBtnRes);
+        } else {
+            leftButton.setVisibility(View.GONE);
+        }
 
         final TextView message = (TextView) rootView.findViewById(R.id.txt_dialog_message);
         try {
