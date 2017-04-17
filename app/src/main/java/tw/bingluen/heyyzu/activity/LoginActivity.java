@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.JsonSyntaxException;
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private ConstraintLayout formView;
     private Button btnLogin;
     private EditText etUsername, etPassword;
-    private boolean isEditingText;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         etUsername = (EditText) findViewById(R.id.username);
         etPassword = (EditText) findViewById(R.id.password);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
         // Add keyboard observer
@@ -59,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 final String password = etPassword.getText().toString();
                 if (username.length() > 0 && password.length() > 0) {
                     getRSAKey();
+                    showProgressbar(true);
                 } else {
                     Toast.makeText(getBaseContext(), R.string.toast_message_username_or_password_is_empty, Toast.LENGTH_LONG)
                             .show();
@@ -113,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         doLogin(RSAUtils.genEncryptorFromPublicKey(response.body()));
                     } catch (Exception e) {
+                        showProgressbar(false);
                         dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON);
                         dialog.setTitle(R.string.dialog_title_oops)
                                 .setMessage(R.string.dialog_message_yzu_server_error)
@@ -126,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                                 .show(getFragmentManager(), "Dialog");
                     }
                 } else {
+                    showProgressbar(false);
                     switch(response.code()) {
                         case 401:
                             dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.NORMAL_WITH_ONE_BUTTON);
@@ -159,6 +164,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PublicKey> call, Throwable t) {
+                showProgressbar(false);
                 final SimpleDialogFragment dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON);
                 dialog.setTitle(R.string.dialog_title_oops)
                         .setMessage(R.string.dialog_message_network_problem)
@@ -192,6 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 } else {
+                    showProgressbar(false);
                     final SimpleDialogFragment dialog;
                     // login fail
                     switch(response.code()) {
@@ -227,6 +234,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AccessToken> call, Throwable t) {
+                showProgressbar(false);
                 if (t instanceof JsonSyntaxException) {
                     final SimpleDialogFragment dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON);
                     dialog.setTitle(R.string.dialog_title_invalid_user)
@@ -268,6 +276,13 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void keyboardDidHide() {
         zoomInLogo();
+    }
+
+    private void showProgressbar(boolean enable) {
+        etUsername.setVisibility(enable ? View.INVISIBLE : View.VISIBLE);
+        etPassword.setVisibility(enable ? View.INVISIBLE : View.VISIBLE);
+        btnLogin.setVisibility(enable ? View.INVISIBLE : View.VISIBLE);
+        progressBar.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void zoomOutLogo() {
