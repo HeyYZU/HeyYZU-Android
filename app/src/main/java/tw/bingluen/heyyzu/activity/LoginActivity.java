@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.JsonSyntaxException;
 
@@ -28,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView logo;
     private ConstraintLayout formView;
     private Button btnLogin;
+    private EditText etUsername, etPassword;
+    private boolean isEditingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         logo = (ImageView) findViewById(R.id.logo);
         formView = (ConstraintLayout) findViewById(R.id.form_layout);
         btnLogin = (Button) findViewById(R.id.btn_login);
+        etUsername = (EditText) findViewById(R.id.username);
+        etPassword = (EditText) findViewById(R.id.password);
 
 
         // Add keyboard observer
@@ -50,11 +55,17 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String username = ((EditText) findViewById(R.id.username)).getText().toString();
-                final String password = ((EditText) findViewById(R.id.password)).getText().toString();
-                if (username.length() > 0 && password.length() > 0) getRSAKey();
+                final String username = etUsername.getText().toString();
+                final String password = etPassword.getText().toString();
+                if (username.length() > 0 && password.length() > 0) {
+                    getRSAKey();
+                } else {
+                    Toast.makeText(getBaseContext(), R.string.toast_message_username_or_password_is_empty, Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         });
+
     }
 
     private void keyboardShowObserver() {
@@ -164,8 +175,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void doLogin(RSACipher rsaCipher) throws Exception {
-        final String username = ((EditText) findViewById(R.id.username)).getText().toString();
-        final String password = ((EditText) findViewById(R.id.password)).getText().toString();
+        final String username = etUsername.getText().toString();
+        final String password = etPassword.getText().toString();
 
         final Call<AccessToken> getToken = YZUAPIClient.getAccessToken(
                 rsaCipher.getEncryptTextOnBase64(username),
@@ -261,13 +272,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void zoomOutLogo() {
         ConstraintLayout.LayoutParams logoParams = (ConstraintLayout.LayoutParams) logo.getLayoutParams();
-        logoParams.topMargin *= 0.5;
         logoParams.height *= 0.75;
         logoParams.width *= 0.75;
         logo.setLayoutParams(logoParams);
 
         ConstraintLayout.LayoutParams formParams = (ConstraintLayout.LayoutParams) formView.getLayoutParams();
-        formParams.topMargin *= 0.4;
+        formParams.bottomMargin += 250;
         formView.setLayoutParams(formParams);
 
         getWindow().getDecorView().invalidate();
@@ -275,13 +285,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void zoomInLogo() {
         ConstraintLayout.LayoutParams logoParams = (ConstraintLayout.LayoutParams) logo.getLayoutParams();
-        logoParams.topMargin /= 0.5;
         logoParams.height /= 0.75;
         logoParams.width /= 0.75;
         logo.setLayoutParams(logoParams);
 
         ConstraintLayout.LayoutParams formParams = (ConstraintLayout.LayoutParams) formView.getLayoutParams();
-        formParams.topMargin /= 0.4;
+        formParams.bottomMargin -= 250;
         formView.setLayoutParams(formParams);
 
         getWindow().getDecorView().invalidate();
