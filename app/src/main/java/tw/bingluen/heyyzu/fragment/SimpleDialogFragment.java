@@ -31,7 +31,7 @@ public class SimpleDialogFragment extends DialogFragment {
     private static final int TWO_BUTTON = 0b10;
 
     private View rootView;
-    private DialogInterface.OnClickListener leftCallback, rightCallback;
+    private View.OnClickListener leftCallback, rightCallback;
     private int titleRes, rightBtnRes, leftBtnRes, messageRes;
     private String messageStr;
     private boolean enableLeftBtn, canceledOnTouchOutside;
@@ -77,10 +77,12 @@ public class SimpleDialogFragment extends DialogFragment {
 
         final Button rightButton = (Button) rootView.findViewById(R.id.btn_right);
         rightButton.setText(rightBtnRes);
+        rightButton.setOnClickListener(rightCallback);
 
         final Button leftButton = (Button) rootView.findViewById(R.id.btn_left);
         if (enableLeftBtn) {
             leftButton.setText(leftBtnRes);
+            leftButton.setOnClickListener(leftCallback);
         } else {
             leftButton.setVisibility(View.GONE);
         }
@@ -121,12 +123,12 @@ public class SimpleDialogFragment extends DialogFragment {
         return this;
     }
 
-    public SimpleDialogFragment setRightButtonCallback(DialogInterface.OnClickListener callback) {
+    public SimpleDialogFragment setRightButtonCallback(View.OnClickListener callback) {
         rightCallback = callback;
         return this;
     }
 
-    public SimpleDialogFragment setLeftButtonCallback(DialogInterface.OnClickListener callback) {
+    public SimpleDialogFragment setLeftButtonCallback(View.OnClickListener callback) {
         leftCallback = callback;
         return this;
     }

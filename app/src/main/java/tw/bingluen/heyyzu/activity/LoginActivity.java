@@ -1,6 +1,5 @@
 package tw.bingluen.heyyzu.activity;
 
-import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +9,8 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.google.gson.JsonSyntaxException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -96,17 +97,18 @@ public class LoginActivity extends AppCompatActivity {
         getRSAPubKey.enqueue(new Callback<PublicKey>() {
             @Override
             public void onResponse(Call<PublicKey> call, Response<PublicKey> response) {
+                final SimpleDialogFragment dialog;
                 if(response.isSuccessful()) {
                     try {
                         doLogin(RSAUtils.genEncryptorFromPublicKey(response.body()));
                     } catch (Exception e) {
-                        SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON)
-                                .setTitle(R.string.dialog_title_oops)
+                        dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON);
+                        dialog.setTitle(R.string.dialog_title_oops)
                                 .setMessage(R.string.dialog_message_yzu_server_error)
                                 .setRightButtonText(R.string.btn_ok)
-                                .setRightButtonCallback(new DialogInterface.OnClickListener() {
+                                .setRightButtonCallback(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                                    public void onClick(View v) {
                                         dialog.dismiss();
                                     }
                                 })
@@ -115,27 +117,26 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     switch(response.code()) {
                         case 401:
-                            SimpleDialogFragment.getInstance(SimpleDialogFragment.NORMAL_WITH_ONE_BUTTON)
-                                    .setTitle(R.string.dialog_title_please_upgrade)
+                            dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.NORMAL_WITH_ONE_BUTTON);
+                            dialog.setTitle(R.string.dialog_title_please_upgrade)
                                     .setMessage(R.string.dialog_message_please_upgrade_client)
                                     .setRightButtonText(R.string.btn_ok)
-                                    .setRightButtonCallback(new DialogInterface.OnClickListener() {
+                                    .setRightButtonCallback(new View.OnClickListener() {
                                         @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // Open Link to google Pay
+                                        public void onClick(View v) {
                                             dialog.dismiss();
                                         }
                                     })
                                     .show(getFragmentManager(), "Dialog");
                             break;
                         case 500:
-                            SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON)
-                                    .setTitle(R.string.dialog_title_oops)
+                            dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON);
+                            dialog.setTitle(R.string.dialog_title_oops)
                                     .setMessage(R.string.dialog_message_yzu_server_error)
                                     .setRightButtonText(R.string.btn_ok)
-                                    .setRightButtonCallback(new DialogInterface.OnClickListener() {
+                                    .setRightButtonCallback(new View.OnClickListener() {
                                         @Override
-                                        public void onClick(DialogInterface dialog, int which) {
+                                        public void onClick(View v) {
                                             dialog.dismiss();
                                         }
                                     })
@@ -147,13 +148,13 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PublicKey> call, Throwable t) {
-                SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON)
-                        .setTitle(R.string.dialog_title_oops)
+                final SimpleDialogFragment dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON);
+                dialog.setTitle(R.string.dialog_title_oops)
                         .setMessage(R.string.dialog_message_network_problem)
                         .setRightButtonText(R.string.btn_ok)
-                        .setRightButtonCallback(new DialogInterface.OnClickListener() {
+                        .setRightButtonCallback(new View.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(View v) {
                                 dialog.dismiss();
                             }
                         })
@@ -177,45 +178,33 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().getToken() != null) {
                         saveAccessToken(response.body());
-                    } else {
-                        SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON)
-                                .setTitle(R.string.dialog_title_invalid_user)
-                                .setMessage(R.string.dialog_message_invalid_username_or_password)
-                                .setRightButtonText(R.string.btn_ok)
-                                .setRightButtonCallback(new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .show(getFragmentManager(), "Dialog");
                     }
 
                 } else {
+                    final SimpleDialogFragment dialog;
                     // login fail
                     switch(response.code()) {
                         case 401:
-                            SimpleDialogFragment.getInstance(SimpleDialogFragment.NORMAL_WITH_ONE_BUTTON)
-                                    .setTitle(R.string.dialog_title_please_upgrade)
+                            dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.NORMAL_WITH_ONE_BUTTON);
+                            dialog.setTitle(R.string.dialog_title_please_upgrade)
                                     .setMessage(R.string.dialog_message_please_upgrade_client)
                                     .setRightButtonText(R.string.btn_ok)
-                                    .setRightButtonCallback(new DialogInterface.OnClickListener() {
+                                    .setRightButtonCallback(new View.OnClickListener() {
                                         @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // Open Link to google Pay
+                                        public void onClick(View v) {
                                             dialog.dismiss();
                                         }
                                     })
                                     .show(getFragmentManager(), "Dialog");
                             break;
                         case 500:
-                            SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON)
-                                    .setTitle(R.string.dialog_title_oops)
+                            dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON);
+                            dialog.setTitle(R.string.dialog_title_oops)
                                     .setMessage(R.string.dialog_message_yzu_server_error)
                                     .setRightButtonText(R.string.btn_ok)
-                                    .setRightButtonCallback(new DialogInterface.OnClickListener() {
+                                    .setRightButtonCallback(new View.OnClickListener() {
                                         @Override
-                                        public void onClick(DialogInterface dialog, int which) {
+                                        public void onClick(View v) {
                                             dialog.dismiss();
                                         }
                                     })
@@ -227,18 +216,32 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AccessToken> call, Throwable t) {
-                // request fail
-                SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON)
-                        .setTitle(R.string.dialog_title_oops)
-                        .setMessage(R.string.dialog_message_network_problem)
-                        .setRightButtonText(R.string.btn_ok)
-                        .setRightButtonCallback(new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show(getFragmentManager(), "Dialog");
+                if (t instanceof JsonSyntaxException) {
+                    final SimpleDialogFragment dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON);
+                    dialog.setTitle(R.string.dialog_title_invalid_user)
+                            .setMessage(R.string.dialog_message_invalid_username_or_password)
+                            .setRightButtonText(R.string.btn_ok)
+                            .setRightButtonCallback(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show(getFragmentManager(), "Dialog");
+                } else {
+                    // request fail
+                    final SimpleDialogFragment dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON);
+                    dialog.setTitle(R.string.dialog_title_oops)
+                            .setMessage(R.string.dialog_message_network_problem)
+                            .setRightButtonText(R.string.btn_ok)
+                            .setRightButtonCallback(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show(getFragmentManager(), "Dialog");
+                }
             }
         });
 
