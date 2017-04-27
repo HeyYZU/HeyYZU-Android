@@ -14,12 +14,14 @@
     <string name="dialog_title_invalid_user">Invalid User</string>
     <string name="dialog_title_please_upgrade">Please Upgrade</string>
     <string name="dialog_title_oops">Oops!</string>
+    <string name="dialog_title_logout">Logout</string>
 
     <string name="dialog_message_network_problem">Can NOT connect server. Please check your network state.</string>
     <string name="dialog_message_invalid_username_or_password">Check your username and password and try again.</string>
     <string name="dialog_message_please_upgrade_client">APP version is too old. Please upgrade APP via Google Play.</string>
     <string name="dialog_message_yzu_server_error">Server(YZU) seems to have some problem!</string>
     <string name="dialog_message_server_error">Server seems to have some problem. We will fix it as soon as possible!</string>
+    <string name="dialog_message_logout">Are you sure you want to log out?</string>
 
     <string name="toast_message_username_or_password_is_empty">Username or Password is EMPTY!</string>
     <string name="title_activity_main">MainActivity</string>

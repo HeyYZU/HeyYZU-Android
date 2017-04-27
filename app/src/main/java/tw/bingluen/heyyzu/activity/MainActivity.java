@@ -2,6 +2,8 @@ package tw.bingluen.heyyzu.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -14,15 +16,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tw.bingluen.heyyzu.R;
+import tw.bingluen.heyyzu.constant.SPKey;
 import tw.bingluen.heyyzu.fragment.NavigationMenuFragment;
+import tw.bingluen.heyyzu.fragment.SimpleDialogFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationMenuFragment.NavigationCallback {
+        implements NavigationMenuFragment.NavigationCallback, View.OnClickListener {
 
     private ViewPager navViewPager;
 
@@ -32,8 +37,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,8 +53,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
+        ImageView logout = (ImageView) findViewById(R.id.img_logout);
+        ImageView settings = (ImageView) findViewById(R.id.img_settings);
+        logout.setOnClickListener(this);
+        settings.setOnClickListener(this);
     }
 
     @Override
@@ -62,21 +67,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -96,6 +86,51 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void switchNavigationPage(@TargetFragment int targetNav) {
         navViewPager.setCurrentItem(targetNav);
+    }
+
+    @Override
+    public void onClick(View v) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        switch(v.getId()) {
+            case R.id.img_logout:
+                final SimpleDialogFragment dialog = SimpleDialogFragment.getInstance(SimpleDialogFragment.NORMAL_WITH_TWO_BUTTON);
+                dialog.setTitle(R.string.dialog_title_logout)
+                        .setLeftButtonText(R.string.btn_ok)
+                        .setRightButtonText(R.string.btn_cancel)
+                        .setMessage(R.string.dialog_message_logout)
+                        .setLeftButtonCallback(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                doLogout();
+                            }
+                        })
+                        .setRightButtonCallback(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show(getFragmentManager(), "Dialog");
+                break;
+            case R.id.img_settings:
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void doLogout() {
+        SharedPreferences sp = getSharedPreferences(SPKey.NAME, MODE_PRIVATE);
+        sp.edit()
+                .remove(SPKey.ACCESS_TOKEN_EXPIRED)
+                .remove(SPKey.USER_ACCESS_TOKEN)
+                .apply();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
