@@ -1,5 +1,7 @@
 package tw.bingluen.heyyzu.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tw.bingluen.heyyzu.R;
+import tw.bingluen.heyyzu.constant.SPKey;
 import tw.bingluen.heyyzu.fragment.SimpleDialogFragment;
 import tw.bingluen.heyyzu.model.AccessToken;
 import tw.bingluen.heyyzu.model.PublicKey;
@@ -51,6 +54,20 @@ public class LoginActivity extends AppCompatActivity {
 
         // Add ViewListener
         setViewListener();
+
+        // Check Token
+        checkToken();
+    }
+
+    private void checkToken() {
+        SharedPreferences sp = getSharedPreferences(SPKey.NAME, MODE_PRIVATE);
+        long tokenExpired = sp.getLong(SPKey.ACCESS_TOKEN_EXPIRED, 0);
+
+        if (tokenExpired > 0 && tokenExpired > System.currentTimeMillis() / 1000) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void setViewListener() {
@@ -268,6 +285,15 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void saveAccessToken(AccessToken accessToken) {
         // Save accessToken
+        SharedPreferences sp = getSharedPreferences(SPKey.NAME, MODE_PRIVATE);
+        sp.edit()
+                .putString(SPKey.USER_ACCESS_TOKEN, accessToken.getToken())
+                .putLong(SPKey.ACCESS_TOKEN_EXPIRED, accessToken.getExpired())
+                .apply();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     protected void keyboardDidShow(int currentKeyboardHeight) {
