@@ -17,4 +17,8 @@
     <string name="dialog_message_yzu_server_error">學校伺服器又掛了啦(╯°□°）╯︵ ┻━┻</string>
     <string name="dialog_title_oops">囧rz</string>
     <string name="toast_message_username_or_password_is_empty">帳號或密碼沒填喔(つД`)ノ</string>
+    <string name="navigation_menu_back">返回</string>
+    <string name="navigation_menu_calendar">行事曆</string>
+    <string name="navigation_menu_course">課程專頁</string>
+    <string name="navigation_menu_library">圖書館</string>
 </resources>

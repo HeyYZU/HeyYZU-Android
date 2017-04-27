@@ -49,4 +49,27 @@
         <item name="android:padding">15dp</item>
     </style>
 
+    <style name="Navigation">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="Navigation.HeaderUsername">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Navigation.HeaderDepartment">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <style name="Navigation.MenuItem" parent="Navigation">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>
