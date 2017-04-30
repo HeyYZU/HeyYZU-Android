@@ -1,7 +1,6 @@
 package tw.bingluen.heyyzu.fragment;
 
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
