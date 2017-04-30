@@ -12,7 +12,7 @@ public class CourseMaterial {
     private String subject;
     @SerializedName("datetime")
     @Expose
-    private Integer datetime;
+    private long datetime;
     @SerializedName("attach")
     @Expose
     private Attach attach;
@@ -31,11 +31,11 @@ public class CourseMaterial {
         this.subject = subject;
     }
 
-    public Integer getDatetime() {
+    public long getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(Integer datetime) {
+    public void setDatetime(long datetime) {
         this.datetime = datetime;
     }
 

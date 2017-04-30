@@ -15,7 +15,7 @@ public class CourseAnnouncement {
     private String content;
     @SerializedName("datetime")
     @Expose
-    private Integer datetime;
+    private long datetime;
     @SerializedName("author")
     @Expose
     private String author;
@@ -39,11 +39,11 @@ public class CourseAnnouncement {
         this.content = content;
     }
 
-    public Integer getDatetime() {
+    public long getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(Integer datetime) {
+    public void setDatetime(long datetime) {
         this.datetime = datetime;
     }
 

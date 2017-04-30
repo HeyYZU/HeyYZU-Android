@@ -1,8 +1,9 @@
 package tw.bingluen.heyyzu.model.course;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 import tw.bingluen.heyyzu.model.file.Archive;
 import tw.bingluen.heyyzu.model.file.Attach;
@@ -17,10 +18,10 @@ public class CourseHomework {
     private String content;
     @SerializedName("datetime")
     @Expose
-    private Integer datetime;
+    private long datetime;
     @SerializedName("deadline")
     @Expose
-    private Integer deadline;
+    private long deadline;
     @SerializedName("group")
     @Expose
     private Boolean group;
@@ -56,19 +57,19 @@ public class CourseHomework {
         this.content = content;
     }
 
-    public Integer getDatetime() {
+    public long getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(Integer datetime) {
+    public void setDatetime(long datetime) {
         this.datetime = datetime;
     }
 
-    public Integer getDeadline() {
+    public long getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Integer deadline) {
+    public void setDeadline(long deadline) {
         this.deadline = deadline;
     }
 
