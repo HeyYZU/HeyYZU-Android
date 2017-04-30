@@ -21,7 +21,7 @@ import tw.bingluen.heyyzu.model.user.Curriculum;
 
 public class HeyYZUAPIClient {
 
-    private static final String API_BASE_URL = "http://10.1.1.6:8080/";
+    private static final String API_BASE_URL = "";
 
     private static Retrofit retrofit;
     private static HeyYZUAPIService sHeyYZUAPIService;
@@ -62,19 +62,22 @@ public class HeyYZUAPIClient {
 
     public interface HeyYZUAPIService {
         // Course
-        @GET("./announcement/{id}")
+        @GET("./course/announcement/{id}")
         Call<List<CourseAnnouncement>> courseAnnouncements(
-                @Path("id") String id
+                @Path("id") String id,
+                @Query("access_token") String accessToken
         );
 
-        @GET("./material/{id}")
+        @GET("./course/material/{id}")
         Call<List<CourseMaterial>> courseMaterials(
-                @Path("id") String id
+                @Path("id") String id,
+                @Query("access_token") String accessToken
         );
 
-        @GET("./homework/{id}")
+        @GET("./course/homework/{id}")
         Call<List<CourseHomework>> courseHomeworks(
-                @Path("id") String id
+                @Path("id") String id,
+                @Query("access_token") String accessToken
         );
 
         // Library
