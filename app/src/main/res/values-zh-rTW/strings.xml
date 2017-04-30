@@ -21,4 +21,7 @@
     <string name="navigation_menu_calendar">行事曆</string>
     <string name="navigation_menu_course">課程專頁</string>
     <string name="navigation_menu_library">圖書館</string>
+    <string name="homework_deadline_has_been_close_txt">已於 %1$s 截止</string>
+    <string name="homework_deadline_remaining_days_txt">剩餘 %1$d 天截止</string>
+    <string name="homework_deadline_remaining_hours_txt">剩餘 %1$d 小時 %2$d 分鐘後截止</string>
 </resources>

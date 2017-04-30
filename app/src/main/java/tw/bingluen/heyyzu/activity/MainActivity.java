@@ -2,10 +2,12 @@ package tw.bingluen.heyyzu.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -13,16 +15,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import tw.bingluen.heyyzu.R;
 import tw.bingluen.heyyzu.constant.SPKey;
+import tw.bingluen.heyyzu.fragment.ClassroomFragment;
 import tw.bingluen.heyyzu.fragment.NavigationMenuFragment;
 import tw.bingluen.heyyzu.fragment.SimpleDialogFragment;
 
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationMenuFragment.NavigationCallback, View.OnClickListener {
 
     private ViewPager navViewPager;
+    private AppBarLayout appBarLayout;
+    private Stack<Float> elevationStack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -57,6 +64,8 @@ public class MainActivity extends AppCompatActivity
         ImageView settings = (ImageView) findViewById(R.id.img_settings);
         logout.setOnClickListener(this);
         settings.setOnClickListener(this);
+
+        elevationStack = new Stack<>();
     }
 
     @Override
@@ -67,12 +76,32 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
+        if (elevationStack.size() > 0) {
+            appBarLayout.setElevation(elevationStack.pop());
+        }
     }
 
     @Override
     public void switchContentFragment(@TargetFragment int targetFragment, @Nullable String key) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
         switch(targetFragment) {
+            case HOME_FRAGMENT:
+                while (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStackImmediate();
+                    onBackPressed();
+                }
+                break;
             case COURSE_FRAGMENT:
+                ft.addToBackStack("NavReplace")
+                        .replace(R.id.content_main, ClassroomFragment.getInstance(key))
+                        .commit()
+                        ;
+                elevationStack.push(appBarLayout.getElevation());
+                appBarLayout.setElevation(0);
                 break;
             case LIBRARY_FRAGMENT:
                 break;
