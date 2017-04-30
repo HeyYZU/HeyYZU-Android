@@ -82,6 +82,7 @@ public class NavigationMenuFragment extends Fragment {
     private void prepareMainMenu() {
         menuItemList = new ArrayList<>();
 
+        menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_home, false, false, null));
         menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_course, false, true, null));
         menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_library, false, false, null));
         menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_calendar, false, false, null));
@@ -91,12 +92,15 @@ public class NavigationMenuFragment extends Fragment {
             public void onItemClick(View v, int position, String key) {
                 switch (position) {
                     case 0:
-                        navigationCallback.switchNavigationPage(NavigationCallback.COURSE_NAVIGATION);
+                        navigationCallback.switchContentFragment(NavigationCallback.HOME_FRAGMENT, null);
                         break;
                     case 1:
-                        navigationCallback.switchContentFragment(NavigationCallback.LIBRARY_FRAGMENT, null);
+                        navigationCallback.switchNavigationPage(NavigationCallback.COURSE_NAVIGATION);
                         break;
                     case 2:
+                        navigationCallback.switchContentFragment(NavigationCallback.LIBRARY_FRAGMENT, null);
+                        break;
+                    case 3:
                         navigationCallback.switchContentFragment(NavigationCallback.CALENDAR_FRAGMENT, null);
                         break;
                     default:
@@ -152,10 +156,11 @@ public class NavigationMenuFragment extends Fragment {
     }
 
     public interface NavigationCallback{
+        int HOME_FRAGMENT = -1;
         int COURSE_FRAGMENT = 0;
         int LIBRARY_FRAGMENT = 1;
         int CALENDAR_FRAGMENT = 2;
-        @IntDef({COURSE_FRAGMENT, LIBRARY_FRAGMENT, CALENDAR_FRAGMENT})
+        @IntDef({HOME_FRAGMENT, COURSE_FRAGMENT, LIBRARY_FRAGMENT, CALENDAR_FRAGMENT})
         @interface TargetFragment{}
 
         int MAIN_NAVIGATION = 0;
