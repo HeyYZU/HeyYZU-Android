@@ -38,7 +38,7 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onItemClick(v, position, announcement);
+                mCallback.showAnnouncement(v, position, announcement);
             }
         });
     }
@@ -60,6 +60,6 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
     }
 
     public interface AnnouncementCallback {
-        void onItemClick(View v, int position, CourseAnnouncement announcement);
+        void showAnnouncement(View v, int position, CourseAnnouncement announcement);
     }
 }

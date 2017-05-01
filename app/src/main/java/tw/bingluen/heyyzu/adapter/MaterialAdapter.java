@@ -74,6 +74,6 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.ViewHo
     }
 
     public interface MaterialCallback {
-        void onItemClick(View v, int position, CourseMaterial material);
+        void showMaterial(View v, int position, CourseMaterial material);
     }
 }

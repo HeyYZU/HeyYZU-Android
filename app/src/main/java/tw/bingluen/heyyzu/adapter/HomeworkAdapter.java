@@ -89,6 +89,6 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
     }
 
     public interface HomeworkCallback{
-        void onItemClick(View v, int position, CourseHomework homework);
+        void showHomework(View v, int position, CourseHomework homework);
     }
 }

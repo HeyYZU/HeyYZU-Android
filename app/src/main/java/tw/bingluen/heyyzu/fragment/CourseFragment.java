@@ -82,7 +82,7 @@ public class CourseFragment extends Fragment {
 
             adapter = new MaterialAdapter(dataList, new MaterialAdapter.MaterialCallback() {
                 @Override
-                public void onItemClick(View v, int position, CourseMaterial material) {
+                public void showMaterial(View v, int position, CourseMaterial material) {
 
                 }
             });
@@ -139,7 +139,7 @@ public class CourseFragment extends Fragment {
 
             adapter = new HomeworkAdapter(dataList, new HomeworkAdapter.HomeworkCallback() {
                 @Override
-                public void onItemClick(View v, int position, CourseHomework homework) {
+                public void showHomework(View v, int position, CourseHomework homework) {
 
                 }
             });
@@ -197,7 +197,7 @@ public class CourseFragment extends Fragment {
             RecyclerView recyclerView = (RecyclerView) root;
             adapter = new AnnouncementAdapter(dataList, new AnnouncementAdapter.AnnouncementCallback() {
                 @Override
-                public void onItemClick(View v, int position, CourseAnnouncement announcement) {
+                public void showAnnouncement(View v, int position, CourseAnnouncement announcement) {
 
                 }
             });
