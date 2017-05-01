@@ -16,6 +16,7 @@
         android:elevation="4dp"/>
 
     <android.support.v4.view.ViewPager
+        android:paddingBottom="48dp"
         android:id="@+id/course_viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
