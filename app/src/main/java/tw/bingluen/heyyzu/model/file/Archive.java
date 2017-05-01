@@ -10,13 +10,13 @@ import com.google.gson.annotations.SerializedName;
 public class Archive extends Attach {
     @SerializedName("datetime")
     @Expose
-    private Integer datetime;
+    private long datetime;
 
-    public Integer getDatetime() {
+    public long getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(Integer datetime) {
+    public void setDatetime(long datetime) {
         this.datetime = datetime;
     }
 }
