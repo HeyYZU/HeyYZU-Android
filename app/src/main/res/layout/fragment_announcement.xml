@@ -71,7 +71,7 @@
             android:id="@+id/btn_download_attach"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/action_download"
+            android:background="@drawable/ic_action_download"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
