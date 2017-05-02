@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,8 @@ public class CourseFragment extends Fragment {
 
         private MaterialAdapter adapter;
 
+        private ProgressBar progressBar;
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -78,7 +81,8 @@ public class CourseFragment extends Fragment {
             prepareData();
 
             View root = inflater.inflate(R.layout.recycle_view, container, false);
-            RecyclerView recyclerView = (RecyclerView) root;
+            RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+            progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
 
             adapter = new MaterialAdapter(dataList, new MaterialAdapter.MaterialCallback() {
                 @Override
@@ -107,6 +111,7 @@ public class CourseFragment extends Fragment {
                                 dataList.add(material);
                             }
                             adapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
                         } else {
                             // GG
                         }
@@ -128,6 +133,8 @@ public class CourseFragment extends Fragment {
 
         private HomeworkAdapter adapter;
 
+        private ProgressBar progressBar;
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -135,7 +142,8 @@ public class CourseFragment extends Fragment {
             dataList = new ArrayList<>();
 
             View root = inflater.inflate(R.layout.recycle_view, container, false);
-            RecyclerView recyclerView = (RecyclerView) root;
+            RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+            progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
 
             adapter = new HomeworkAdapter(dataList, new HomeworkAdapter.HomeworkCallback() {
                 @Override
@@ -167,6 +175,7 @@ public class CourseFragment extends Fragment {
                                 dataList.add(homework);
                             }
                             adapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
                         } else {
                             // GG
                         }
@@ -186,6 +195,8 @@ public class CourseFragment extends Fragment {
 
         private AnnouncementAdapter adapter;
 
+        private ProgressBar progressBar;
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -195,7 +206,9 @@ public class CourseFragment extends Fragment {
             prepareData();
 
             View root = inflater.inflate(R.layout.recycle_view, container, false);
-            RecyclerView recyclerView = (RecyclerView) root;
+            RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+            progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
+
             adapter = new AnnouncementAdapter(dataList, new AnnouncementAdapter.AnnouncementCallback() {
                 @Override
                 public void showAnnouncement(View v, int position, CourseAnnouncement announcement) {
@@ -227,6 +240,7 @@ public class CourseFragment extends Fragment {
                                 dataList.add(announcement);
                             }
                             adapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
                         } else {
                             // GG
                         }

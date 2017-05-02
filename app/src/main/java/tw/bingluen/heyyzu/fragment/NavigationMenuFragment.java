@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class NavigationMenuFragment extends Fragment {
 
     private NavigationCallback navigationCallback;
 
+    private ProgressBar navMenuProgressBar;
+
     public static NavigationMenuFragment getInstance(@PageType int pageType) {
         NavigationMenuFragment fragment = new NavigationMenuFragment();
         fragment.pageType = pageType;
@@ -60,6 +63,10 @@ public class NavigationMenuFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_navigation_menu_page, container, false);
+
+        navMenuProgressBar = (ProgressBar) root.findViewById(R.id.nav_menu_progress);
+
         switch (pageType) {
             case PAGE_TYPE_MAIN:
                 prepareMainMenu();
@@ -69,13 +76,12 @@ public class NavigationMenuFragment extends Fragment {
                 break;
         }
 
-        View root = inflater.inflate(R.layout.fragment_navigation_menu_page, container, false);
-
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.nav_menu);
         adapter = new NavigationMenuItemAdapter(menuItemList, menuCallback);
         recyclerView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         return root;
     }
 
@@ -86,6 +92,8 @@ public class NavigationMenuFragment extends Fragment {
         menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_course, false, true, null));
         menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_library, false, false, null));
         menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_calendar, false, false, null));
+
+        navMenuProgressBar.setVisibility(View.GONE);
 
         menuCallback = new NavigationMenuItemAdapter.NavigationMenuCallback() {
             @Override
@@ -130,6 +138,8 @@ public class NavigationMenuFragment extends Fragment {
                         }
 
                         adapter.notifyDataSetChanged();
+
+                        navMenuProgressBar.setVisibility(View.GONE);
                     } else {
                         // Token 過期
                     }
