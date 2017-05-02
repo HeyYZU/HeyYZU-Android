@@ -2,6 +2,7 @@ package tw.bingluen.heyyzu.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,29 +17,34 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
 
     private List<CourseAnnouncement> announcementList;
     private AnnouncementCallback mCallback;
+    private Context context;
 
     public AnnouncementAdapter(List<CourseAnnouncement> announcements, AnnouncementCallback callback) {
         announcementList = announcements;
-         mCallback = callback;
+        mCallback = callback;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         View item = LayoutInflater.from(context).inflate(R.layout.item_announcement, parent, false);
         return new ViewHolder(item);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        final CourseAnnouncement announcement = announcementList.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final int pos = position;
+        final CourseAnnouncement announcement = announcementList.get(pos);
         holder.title.setText(announcement.getSubject());
-        holder.author.setText(announcement.getAuthor());
+        holder.content.setText(announcement.getContent());
+        holder.datetime.setText(DateFormat.getDateFormat(context).format(
+                announcement.getDatetime() * 1000
+        ));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.showAnnouncement(v, position, announcement);
+                mCallback.showAnnouncement(v, pos, announcement);
             }
         });
     }
@@ -50,12 +56,14 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
-        public TextView author;
+        public TextView content;
+        public TextView datetime;
         public ViewHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.txt_announcement_title);
-            author = (TextView) itemView.findViewById(R.id.txt_announcement_author);
+            content = (TextView) itemView.findViewById(R.id.txt_announcement_content);
+            datetime = (TextView) itemView.findViewById(R.id.txt_announcement_datetime);
         }
     }
 
