@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,6 @@ public class CourseFragment extends Fragment {
     @IntDef({ANNOUNCEMENT_FRAGMENT, HOMEWORK_FRAGMENT, MATERIAL_FRAGMENT})
     public @interface CourseFragmentType{}
 
-    private int courseFragmentType;
     protected String lessonID;
 
     public static CourseFragment getInstance(@CourseFragmentType int fragmentType, @NonNull String lessonID) throws Exception {
@@ -59,7 +59,6 @@ public class CourseFragment extends Fragment {
                 throw new Exception("CourseFragmentType is not expected.");
         }
 
-        fragment.courseFragmentType = fragmentType;
         fragment.lessonID = lessonID;
 
         return fragment;
@@ -72,6 +71,10 @@ public class CourseFragment extends Fragment {
 
         private ProgressBar progressBar;
 
+        private View exceptionView;
+
+        private RecyclerView recyclerView;
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -81,8 +84,9 @@ public class CourseFragment extends Fragment {
             prepareData();
 
             View root = inflater.inflate(R.layout.recycle_view, container, false);
-            RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+            recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
             progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
+            exceptionView = root.findViewById(R.id.exception_view);
 
             adapter = new MaterialAdapter(dataList, new MaterialAdapter.MaterialCallback() {
                 @Override
@@ -112,6 +116,11 @@ public class CourseFragment extends Fragment {
                             }
                             adapter.notifyDataSetChanged();
                             progressBar.setVisibility(View.GONE);
+                            if (dataList.size() == 0) {
+                                recyclerView.setVisibility(View.GONE);
+                                exceptionView.setVisibility(View.VISIBLE);
+                                ((TextView) exceptionView.findViewById(R.id.txt_exception_view)).setText(R.string.txt_material_empty);
+                            }
                         } else {
                             // GG
                         }
@@ -135,6 +144,10 @@ public class CourseFragment extends Fragment {
 
         private ProgressBar progressBar;
 
+        private View exceptionView;
+
+        private RecyclerView recyclerView;
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -142,8 +155,9 @@ public class CourseFragment extends Fragment {
             dataList = new ArrayList<>();
 
             View root = inflater.inflate(R.layout.recycle_view, container, false);
-            RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+            recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
             progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
+            exceptionView = root.findViewById(R.id.exception_view);
 
             adapter = new HomeworkAdapter(dataList, new HomeworkAdapter.HomeworkCallback() {
                 @Override
@@ -176,6 +190,11 @@ public class CourseFragment extends Fragment {
                             }
                             adapter.notifyDataSetChanged();
                             progressBar.setVisibility(View.GONE);
+                            if (dataList.size() == 0) {
+                                recyclerView.setVisibility(View.GONE);
+                                exceptionView.setVisibility(View.VISIBLE);
+                                ((TextView) exceptionView.findViewById(R.id.txt_exception_view)).setText(R.string.txt_homework_empty);
+                            }
                         } else {
                             // GG
                         }
@@ -197,6 +216,10 @@ public class CourseFragment extends Fragment {
 
         private ProgressBar progressBar;
 
+        private View exceptionView;
+
+        private RecyclerView recyclerView;
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -206,8 +229,9 @@ public class CourseFragment extends Fragment {
             prepareData();
 
             View root = inflater.inflate(R.layout.recycle_view, container, false);
-            RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+            recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
             progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
+            exceptionView = root.findViewById(R.id.exception_view);
 
             adapter = new AnnouncementAdapter(dataList, new AnnouncementAdapter.AnnouncementCallback() {
                 @Override
@@ -241,6 +265,13 @@ public class CourseFragment extends Fragment {
                             }
                             adapter.notifyDataSetChanged();
                             progressBar.setVisibility(View.GONE);
+
+                            if (dataList.size() == 0) {
+                                recyclerView.setVisibility(View.GONE);
+                                exceptionView.setVisibility(View.VISIBLE);
+                                ((TextView) exceptionView.findViewById(R.id.txt_exception_view)).setText(R.string.txt_announcement_empty);
+                            }
+
                         } else {
                             // GG
                         }

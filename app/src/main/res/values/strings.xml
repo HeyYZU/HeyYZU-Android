@@ -59,15 +59,18 @@
     <string name="txt_homework_empty_attach">No attachment</string>
     <string name="txt_homework_grade">Grade and Comment</string>
     <string name="txt_homework_no_comment">No comment</string>
+    <string name="txt_homework_empty">Have not assign anything.</string>
 
     <string name="txt_homework_countdown">%1$d day(s)</string>
 
     <string name="txt_material_handout">Handout</string>
     <string name="txt_material_link">Link</string>
     <string name="txt_material_video">Video</string>
+    <string name="txt_material_empty">Have not uploaded any material.</string>
 
     <string name="txt_announcement_signature">%1$s post on %2$s</string>
     <string name="txt_announcement_subject">Title</string>
     <string name="txt_announcement_content">Content</string>
 
+    <string name="txt_announcement_empty">Have not post anything.</string>
 </resources>
