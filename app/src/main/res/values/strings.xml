@@ -22,6 +22,7 @@
     <string name="dialog_message_yzu_server_error">Server(YZU) seems to have some problem!</string>
     <string name="dialog_message_server_error">Server seems to have some problem. We will fix it as soon as possible!</string>
     <string name="dialog_message_logout">Are you sure you want to log out?</string>
+    <string name="dialog_message_token_expired">Token is expired, please login again.</string>
 
     <string name="toast_message_username_or_password_is_empty">Username or Password is EMPTY!</string>
     <string name="title_activity_main">MainActivity</string>

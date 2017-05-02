@@ -84,6 +84,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Interface - NavigationMenuFragment.NavigationCallback.switchContentFragment
+     * To handle fragment replace switch request from navigation menu
+     * @param targetFragment new fragment
+     * @param key addition key to fragment
+     */
+
     @Override
     public void switchContentFragment(@TargetFragment int targetFragment, @Nullable String key) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -113,6 +120,12 @@ public class MainActivity extends AppCompatActivity
                 return;
         }
     }
+
+    /**
+     * Interface - NavigationMenuFragment.NavigationCallback.switchNavigationPage
+     * Switch navigation menu page
+     * @param targetNav target menu page index
+     */
 
     @Override
     public void switchNavigationPage(@TargetFragment int targetNav) {
@@ -164,6 +177,13 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
+    /**
+     * Interface - FragmentHelper.replaceContentFragment
+     * To handle replace fragment request from child fragment.
+     * @param fragment new fragment
+     * @param hasAppbar Is new fragment include self-appbar?
+     */
+
     @Override
     public void replaceContentFragment(Fragment fragment, boolean hasAppbar) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -177,6 +197,16 @@ public class MainActivity extends AppCompatActivity
         if (hasAppbar) {
             appBarLayout.setElevation(0);
         }
+    }
+
+    /**
+     * Interface - FragmentHelper.
+     * forceLogout user.
+     */
+
+    @Override
+    public void forceLogout() {
+        doLogout();
     }
 
 
