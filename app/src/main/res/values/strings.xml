@@ -47,5 +47,27 @@
 
     <string name="homework_deadline_has_been_close_txt">Has been close on %1$s.</string>
 
-    <string name="date_format_string"></string>
+    <!-- course homework -->
+    <string name="txt_homework_deadline_after">Deadline in %1$d</string>
+    <string name="txt_homework_deadline_closing">It was closing on %1$s</string>
+    <string name="txt_homework_subject">Title</string>
+    <string name="txt_homework_schedule">Schedule</string>
+    <string name="txt_homework_description">Description</string>
+    <string name="txt_homework_deadline">Deadline</string>
+    <string name="txt_homework_attachment">Attachment</string>
+    <string name="txt_homework_uploadedFile">Uploaded File</string>
+    <string name="txt_homework_empty_attach">No attachment</string>
+    <string name="txt_homework_grade">Grade and Comment</string>
+    <string name="txt_homework_no_comment">No comment</string>
+
+    <string name="txt_homework_countdown">%1$d day(s)</string>
+
+    <string name="txt_material_handout">Handout</string>
+    <string name="txt_material_link">Link</string>
+    <string name="txt_material_video">Video</string>
+
+    <string name="txt_announcement_signature">%1$s post on %2$s</string>
+    <string name="txt_announcement_subject">Title</string>
+    <string name="txt_announcement_content">Content</string>
+
 </resources>

@@ -26,11 +26,13 @@ import java.util.Stack;
 import tw.bingluen.heyyzu.R;
 import tw.bingluen.heyyzu.constant.SPKey;
 import tw.bingluen.heyyzu.fragment.ClassroomFragment;
+import tw.bingluen.heyyzu.fragment.FragmentHelper;
 import tw.bingluen.heyyzu.fragment.NavigationMenuFragment;
 import tw.bingluen.heyyzu.fragment.SimpleDialogFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationMenuFragment.NavigationCallback, View.OnClickListener {
+        implements NavigationMenuFragment.NavigationCallback,
+        View.OnClickListener, FragmentHelper {
 
     private ViewPager navViewPager;
     private AppBarLayout appBarLayout;
@@ -160,6 +162,21 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void replaceContentFragment(Fragment fragment, boolean hasAppbar) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.addToBackStack("FragmentReplace")
+                .replace(R.id.content_main, fragment)
+                .commit()
+                ;
+
+        elevationStack.push(appBarLayout.getElevation());
+
+        if (hasAppbar) {
+            appBarLayout.setElevation(0);
+        }
     }
 
 

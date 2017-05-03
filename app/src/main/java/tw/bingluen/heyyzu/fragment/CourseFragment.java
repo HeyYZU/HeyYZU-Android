@@ -83,7 +83,7 @@ public class CourseFragment extends Fragment {
             adapter = new MaterialAdapter(dataList, new MaterialAdapter.MaterialCallback() {
                 @Override
                 public void showMaterial(View v, int position, CourseMaterial material) {
-
+                    tw.bingluen.heyyzu.fragment.MaterialFragment.getInstance(material).show(getChildFragmentManager(), "showMaterial");
                 }
             });
 
@@ -140,7 +140,8 @@ public class CourseFragment extends Fragment {
             adapter = new HomeworkAdapter(dataList, new HomeworkAdapter.HomeworkCallback() {
                 @Override
                 public void showHomework(View v, int position, CourseHomework homework) {
-
+                    FragmentHelper helper = (FragmentHelper) getActivity();
+                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.HomeworkFragment.getInstance(homework), false);
                 }
             });
 
@@ -198,7 +199,8 @@ public class CourseFragment extends Fragment {
             adapter = new AnnouncementAdapter(dataList, new AnnouncementAdapter.AnnouncementCallback() {
                 @Override
                 public void showAnnouncement(View v, int position, CourseAnnouncement announcement) {
-
+                    FragmentHelper helper = (FragmentHelper) getActivity();
+                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.AnnouncementFragment.getInstance(announcement), false);
                 }
             });
 

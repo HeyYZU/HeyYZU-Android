@@ -37,7 +37,8 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final CourseMaterial material = materialList.get(position);
+        final int pos = position;
+        final CourseMaterial material = materialList.get(pos);
         holder.subject.setText(material.getSubject());
 
         if (material.getAttach() != null) {
@@ -53,6 +54,13 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.ViewHo
         }
 
         holder.uploadTime.setText(DateFormat.getDateFormat(context).format(new Date(material.getDatetime() * 1000)));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.showMaterial(v, pos, material);
+            }
+        });
     }
 
     @Override

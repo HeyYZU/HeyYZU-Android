@@ -4,8 +4,12 @@ import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
+import android.support.v4.content.ContextCompat;
 
 public class ContextUtils {
 
@@ -32,6 +36,15 @@ public class ContextUtils {
             return getContext23(fragment);
         } else {
             return getContextLegacy(fragment);
+        }
+    }
+
+    public static Drawable getDrawable(Fragment fragment, @DrawableRes int id) {
+        int version = Build.VERSION.SDK_INT;
+        if (version >= Build.VERSION_CODES.M) {
+            return ContextCompat.getDrawable(getContext23(fragment), id);
+        } else {
+            return ContextCompat.getDrawable(getContextLegacy(fragment), id);
         }
     }
 

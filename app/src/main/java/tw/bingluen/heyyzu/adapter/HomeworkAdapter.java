@@ -35,7 +35,8 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final CourseHomework homework = homeworkList.get(position);
+        final int pos = position;
+        final CourseHomework homework = homeworkList.get(pos);
         final long deadline = homework.getDeadline();
         final long duration = deadline - (System.currentTimeMillis() / 1000);
 
@@ -68,6 +69,13 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
         } else {
             holder.score.setVisibility(View.GONE);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.showHomework(v, pos, homework);
+            }
+        });
     }
 
     @Override

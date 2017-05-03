@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#308c76</color>
     <color name="colorAccent">#f36c56</color>
     <color name="colorStatusBar">#308c76</color>
+    <color name="colorBlack54">#8A000000</color>
+    <color name="colorBlack87">#DE000000</color>
+    <color name="colorBlack26">#42000000</color>
 </resources>
