@@ -93,7 +93,7 @@ public abstract class CourseFragment extends Fragment {
                 exceptionText.setText(R.string.dialog_message_yzu_server_error);
                 break;
             case 0:
-                exceptionImage.setImageResource(R.drawable.ic_busying);
+                exceptionImage.setImageResource(R.drawable.ic_connection_error);
                 exceptionText.setText(R.string.dialog_message_network_problem);
                 break;
             default:
