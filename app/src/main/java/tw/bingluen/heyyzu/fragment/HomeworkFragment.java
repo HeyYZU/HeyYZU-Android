@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,17 +29,29 @@ import tw.bingluen.heyyzu.tool.ContextUtils;
 
 public class HomeworkFragment extends Fragment {
     private CourseHomework homework;
+    private String previousToolbarTitle, lessonName;
 
-    public static HomeworkFragment getInstance(CourseHomework homework) {
+    public static HomeworkFragment getInstance(CourseHomework homework, String lessonName) {
         HomeworkFragment fragment = new HomeworkFragment();
         fragment.homework = homework;
-
+        fragment.lessonName = lessonName;
         return fragment;
+    }
+
+    @Override
+    public void onDestroyView() {
+        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(previousToolbarTitle);
+        super.onDestroyView();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
+        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(lessonName);
+
         View root = inflater.inflate(R.layout.fragment_homework, container, false);
 
         TextView subject, description, deadline, deadlineCountdown, attachFilename, gradeText, comment, gradeTitle;

@@ -10,6 +10,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +44,9 @@ public abstract class CourseFragment extends Fragment {
     public @interface CourseFragmentType{}
 
     protected String lessonID;
+    protected String lessonName;
 
-    public static CourseFragment getInstance(@CourseFragmentType int fragmentType, @NonNull String lessonID) throws Exception {
+    public static CourseFragment getInstance(@CourseFragmentType int fragmentType, @NonNull String lessonID, @NonNull String lessonName) throws Exception {
         CourseFragment fragment;
 
         switch (fragmentType) {
@@ -62,6 +64,7 @@ public abstract class CourseFragment extends Fragment {
         }
 
         fragment.lessonID = lessonID;
+        fragment.lessonName = lessonName;
 
         return fragment;
     }
@@ -209,7 +212,7 @@ public abstract class CourseFragment extends Fragment {
                 @Override
                 public void showHomework(View v, int position, CourseHomework homework) {
                     FragmentHelper helper = (FragmentHelper) getActivity();
-                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.HomeworkFragment.getInstance(homework));
+                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.HomeworkFragment.getInstance(homework, lessonName));
                 }
             });
 
@@ -280,7 +283,7 @@ public abstract class CourseFragment extends Fragment {
                 @Override
                 public void showAnnouncement(View v, int position, CourseAnnouncement announcement) {
                     FragmentHelper helper = (FragmentHelper) getActivity();
-                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.AnnouncementFragment.getInstance(announcement));
+                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.AnnouncementFragment.getInstance(announcement, lessonName));
                 }
             });
 

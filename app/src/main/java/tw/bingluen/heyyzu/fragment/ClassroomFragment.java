@@ -77,9 +77,9 @@ public class ClassroomFragment extends Fragment {
             fragmentList = new ArrayList<>();
 
             try {
-                fragmentList.add(CourseFragment.getInstance(CourseFragment.ANNOUNCEMENT_FRAGMENT, lessonID));
-                fragmentList.add(CourseFragment.getInstance(CourseFragment.HOMEWORK_FRAGMENT, lessonID));
-                fragmentList.add(CourseFragment.getInstance(CourseFragment.MATERIAL_FRAGMENT, lessonID));
+                fragmentList.add(CourseFragment.getInstance(CourseFragment.ANNOUNCEMENT_FRAGMENT, lessonID, lessonName));
+                fragmentList.add(CourseFragment.getInstance(CourseFragment.HOMEWORK_FRAGMENT, lessonID, lessonName));
+                fragmentList.add(CourseFragment.getInstance(CourseFragment.MATERIAL_FRAGMENT, lessonID, lessonName));
             } catch (Exception e) {
             }
         }
