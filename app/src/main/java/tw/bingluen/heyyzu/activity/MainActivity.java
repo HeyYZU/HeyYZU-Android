@@ -27,6 +27,7 @@ import tw.bingluen.heyyzu.R;
 import tw.bingluen.heyyzu.constant.SPKey;
 import tw.bingluen.heyyzu.fragment.ClassroomFragment;
 import tw.bingluen.heyyzu.fragment.FragmentHelper;
+import tw.bingluen.heyyzu.fragment.LibraryFragment;
 import tw.bingluen.heyyzu.fragment.NavigationMenuFragment;
 import tw.bingluen.heyyzu.fragment.SimpleDialogFragment;
 
@@ -103,6 +104,10 @@ public class MainActivity extends AppCompatActivity
                         ;
                 break;
             case LIBRARY_FRAGMENT:
+                ft.addToBackStack("NavReplace")
+                        .replace(R.id.content_main, new LibraryFragment())
+                        .commit()
+                        ;
                 break;
             case CALENDAR_FRAGMENT:
                 break;

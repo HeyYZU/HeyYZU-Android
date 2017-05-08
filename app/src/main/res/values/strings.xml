@@ -25,7 +25,10 @@
     <string name="dialog_message_token_expired">Token is expired, please login again.</string>
 
     <string name="toast_message_username_or_password_is_empty">Username or Password is EMPTY!</string>
+    <string name="hint_library_search">Search books...</string>
+
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_fragment_library">Library</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -74,4 +77,5 @@
     <string name="txt_announcement_content">Content</string>
 
     <string name="txt_announcement_empty">Have not post anything.</string>
+
 </resources>
