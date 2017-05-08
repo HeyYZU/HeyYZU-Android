@@ -97,7 +97,7 @@ public class NavigationMenuFragment extends Fragment {
 
         menuCallback = new NavigationMenuItemAdapter.NavigationMenuCallback() {
             @Override
-            public void onItemClick(View v, int position, String key) {
+            public void onItemClick(View v, int position, NavigationMenuItem item) {
                 switch (position) {
                     case 0:
                         navigationCallback.switchContentFragment(NavigationCallback.HOME_FRAGMENT, null);
@@ -154,10 +154,10 @@ public class NavigationMenuFragment extends Fragment {
 
         menuCallback = new NavigationMenuItemAdapter.NavigationMenuCallback() {
             @Override
-            public void onItemClick(View v, int position, String key) {
-                Log.d("NavMenuItem", "Click position = " + position + " key = " + key);
+            public void onItemClick(View v, int position, NavigationMenuItem item) {
                 if (position > 0) {
-                    navigationCallback.switchContentFragment(NavigationCallback.COURSE_FRAGMENT, key);
+                    navigationCallback.switchContentFragment(NavigationCallback.COURSE_FRAGMENT,
+                            new CourseKeys(item.getKey(), item.getTitle()));
                 } else {
                     navigationCallback.switchNavigationPage(NavigationCallback.MAIN_NAVIGATION);
                 }
@@ -179,7 +179,17 @@ public class NavigationMenuFragment extends Fragment {
         @interface TargetNavigation{}
 
 
-        void switchContentFragment(@TargetFragment int targetFragment, @Nullable String key);
+        void switchContentFragment(@TargetFragment int targetFragment, @Nullable Object key);
         void switchNavigationPage(@TargetNavigation int targetNav);
+    }
+
+    public static class CourseKeys {
+        public String courseId;
+        public String courseName;
+
+        public CourseKeys(String courseId, String courseName) {
+            this.courseId = courseId;
+            this.courseName = courseName;
+        }
     }
 }

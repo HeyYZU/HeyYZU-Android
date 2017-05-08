@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity
         View.OnClickListener, FragmentHelper {
 
     private ViewPager navViewPager;
-    private AppBarLayout appBarLayout;
-    private Stack<Float> elevationStack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +42,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,7 +63,6 @@ public class MainActivity extends AppCompatActivity
         logout.setOnClickListener(this);
         settings.setOnClickListener(this);
 
-        elevationStack = new Stack<>();
     }
 
     @Override
@@ -79,9 +74,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
 
-        if (elevationStack.size() > 0) {
-            appBarLayout.setElevation(elevationStack.pop());
-        }
     }
 
     /**
@@ -92,7 +84,7 @@ public class MainActivity extends AppCompatActivity
      */
 
     @Override
-    public void switchContentFragment(@TargetFragment int targetFragment, @Nullable String key) {
+    public void switchContentFragment(@TargetFragment int targetFragment, @Nullable Object key) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -109,8 +101,6 @@ public class MainActivity extends AppCompatActivity
                         .replace(R.id.content_main, ClassroomFragment.getInstance(key))
                         .commit()
                         ;
-                elevationStack.push(appBarLayout.getElevation());
-                appBarLayout.setElevation(0);
                 break;
             case LIBRARY_FRAGMENT:
                 break;
@@ -181,22 +171,15 @@ public class MainActivity extends AppCompatActivity
      * Interface - FragmentHelper.replaceContentFragment
      * To handle replace fragment request from child fragment.
      * @param fragment new fragment
-     * @param hasAppbar Is new fragment include self-appbar?
      */
 
     @Override
-    public void replaceContentFragment(Fragment fragment, boolean hasAppbar) {
+    public void replaceContentFragment(Fragment fragment) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack("FragmentReplace")
                 .replace(R.id.content_main, fragment)
                 .commit()
                 ;
-
-        elevationStack.push(appBarLayout.getElevation());
-
-        if (hasAppbar) {
-            appBarLayout.setElevation(0);
-        }
     }
 
     /**

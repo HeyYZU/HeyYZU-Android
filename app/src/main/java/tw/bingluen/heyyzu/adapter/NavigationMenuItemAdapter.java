@@ -34,7 +34,7 @@ public class NavigationMenuItemAdapter extends RecyclerView.Adapter<NavigationMe
     @Override
     public void onBindViewHolder(NavigationMenuItemAdapter.ViewHolder holder, int position) {
         final int pos = position;
-        NavigationMenuItem menuItem = menuItemList.get(pos);
+        final NavigationMenuItem menuItem = menuItemList.get(pos);
 
         try {
             holder.text.setText(menuItem.getTitleResId());
@@ -47,11 +47,10 @@ public class NavigationMenuItemAdapter extends RecyclerView.Adapter<NavigationMe
         holder.leftArrow.setVisibility(menuItem.isEnableLeftArrow() ? View.VISIBLE : View.INVISIBLE);
         holder.rightArrow.setVisibility(menuItem.isEnableRightArrow() ? View.VISIBLE : View.INVISIBLE);
 
-        final String key = menuItem.getKey();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onItemClick(v, pos, key);
+                mCallback.onItemClick(v, pos, menuItem);
             }
         });
     }
@@ -76,6 +75,6 @@ public class NavigationMenuItemAdapter extends RecyclerView.Adapter<NavigationMe
     }
 
     public interface NavigationMenuCallback{
-        void onItemClick(View v, int position, String key);
+        void onItemClick(View v, int position, NavigationMenuItem item);
     }
 }

@@ -209,7 +209,7 @@ public abstract class CourseFragment extends Fragment {
                 @Override
                 public void showHomework(View v, int position, CourseHomework homework) {
                     FragmentHelper helper = (FragmentHelper) getActivity();
-                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.HomeworkFragment.getInstance(homework), false);
+                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.HomeworkFragment.getInstance(homework));
                 }
             });
 
@@ -280,7 +280,7 @@ public abstract class CourseFragment extends Fragment {
                 @Override
                 public void showAnnouncement(View v, int position, CourseAnnouncement announcement) {
                     FragmentHelper helper = (FragmentHelper) getActivity();
-                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.AnnouncementFragment.getInstance(announcement), false);
+                    helper.replaceContentFragment(tw.bingluen.heyyzu.fragment.AnnouncementFragment.getInstance(announcement));
                 }
             });
 
