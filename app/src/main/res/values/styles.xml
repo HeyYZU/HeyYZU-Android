@@ -88,6 +88,22 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="Library" />
+    <style name="Library.Dashboard">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Library.Dashboard.Title">
+        <item name="android:textColor">@color/colorBlack87</item>
+    </style>
+
+    <style name="Library.Dashboard.Button" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

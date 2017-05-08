@@ -9,6 +9,7 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_yes">YES</string>
     <string name="btn_no">NO</string>
+    <string name="btn_view_all">View All</string>
 
     <string name="dialog_title_login_fail">Login Fail</string>
     <string name="dialog_title_invalid_user">Invalid User</string>
@@ -77,5 +78,12 @@
     <string name="txt_announcement_content">Content</string>
 
     <string name="txt_announcement_empty">Have not post anything.</string>
+
+
+    <string name="txt_library_reading_book">Reading Book (%1$d)</string>
+    <string name="txt_library_reserving_book">Reserving Book (%1$d)</string>
+    <string name="txt_library_favorite_book">Collection Book (%1$d)</string>
+
+
 
 </resources>
