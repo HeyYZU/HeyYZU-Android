@@ -16,6 +16,7 @@ import tw.bingluen.heyyzu.constant.HeyYZUSecret;
 import tw.bingluen.heyyzu.model.course.CourseAnnouncement;
 import tw.bingluen.heyyzu.model.course.CourseHomework;
 import tw.bingluen.heyyzu.model.course.CourseMaterial;
+import tw.bingluen.heyyzu.model.library.LibraryDashboard;
 import tw.bingluen.heyyzu.model.library.LibraryUsersBook;
 import tw.bingluen.heyyzu.model.user.Curriculum;
 
@@ -81,6 +82,10 @@ public class HeyYZUAPIClient {
         );
 
         // Library
+        @GET("./library/dashboard")
+        Call<LibraryDashboard> libraryDashboard(
+                @Query("access_toke") String accessToken
+        );
         @GET("./library/reading")
         Call<List<LibraryUsersBook>> libraryReading(
                 @Query("access_token") String accessToken
