@@ -22,7 +22,7 @@ import tw.bingluen.heyyzu.model.user.Curriculum;
 
 public class HeyYZUAPIClient {
 
-    private static final String API_BASE_URL = "";
+    private static final String API_BASE_URL = "http://10.1.1.6:8080/";
 
     private static Retrofit retrofit;
     private static HeyYZUAPIService sHeyYZUAPIService;
