@@ -84,7 +84,7 @@ public class HeyYZUAPIClient {
         // Library
         @GET("./library/dashboard")
         Call<LibraryDashboard> libraryDashboard(
-                @Query("access_toke") String accessToken
+                @Query("access_token") String accessToken
         );
         @GET("./library/reading")
         Call<List<LibraryUsersBook>> libraryReading(
