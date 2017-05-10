@@ -28,7 +28,7 @@ public class LibraryBookAttribute {
     private Integer order;
     @SerializedName("reservedBefore")
     @Expose
-    private Integer reservedBefore;
+    private long reservedBefore;
 
     public Integer getDueDate() {
         return dueDate;
@@ -86,11 +86,11 @@ public class LibraryBookAttribute {
         this.order = order;
     }
 
-    public Integer getReservedBefore() {
+    public long getReservedBefore() {
         return reservedBefore;
     }
 
-    public void setReservedBefore(Integer reservedBefore) {
+    public void setReservedBefore(long reservedBefore) {
         this.reservedBefore = reservedBefore;
     }
 
