@@ -83,7 +83,17 @@
     <string name="txt_library_reading_book">Reading Book (%1$d)</string>
     <string name="txt_library_reserving_book">Reserving Book (%1$d)</string>
     <string name="txt_library_favorite_book">Collection Book (%1$d)</string>
+    
+    <string name="txt_library_book_due_left">%1$d day(s) left.</string>
+    <string name="txt_library_book_due_over">Over %1$d day(s).</string>
+    <string name="txt_library_book_due_over_with_fine">Over %1$d day(s) with %2$d fine.</string>
 
+    <string name="txt_library_no_reading_book">Nothing is reading.</string>
+    <string name="txt_library_no_reserving_book">Nothing is reserving.</string>
+    <string name="txt_library_no_favorite_book">Nothing on your collection.</string>
+    
+    <string name="txt_library_reserving_available_to_pick_up">Available now (Reserved until %1$s)</string>
+    <string name="txt_library_reserving_order">Order %1$d</string>
 
 
 </resources>
