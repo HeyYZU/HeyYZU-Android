@@ -34,6 +34,7 @@ public class LibraryFragment extends Fragment {
 
     private FloatingSearchView searchView;
     private LibraryDashboard dashboard;
+    private CharSequence previousTitle;
 
     @Nullable
     @Override
@@ -41,6 +42,7 @@ public class LibraryFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_library, container, false);
 
         final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        previousTitle =  toolbar.getTitle();
         toolbar.setTitle(R.string.title_fragment_library);
 
         final View viewSearchView = root.findViewById(R.id.view_searchView);
@@ -63,6 +65,9 @@ public class LibraryFragment extends Fragment {
         super.onDestroyView();
         final AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appBarLayout);
         appBarLayout.setElevation(searchView.getElevation());
+
+        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(previousTitle);
     }
 
     private void loadingDashboard(final View rootView) {
@@ -94,37 +99,43 @@ public class LibraryFragment extends Fragment {
         final RecyclerView reservingView = (RecyclerView) root.findViewById(R.id.recycler_view_reserving_book);
         final RecyclerView favoriteView = (RecyclerView) root.findViewById(R.id.recycler_view_favorite_book);
 
-        readingView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
-        readingView.setItemAnimator(new DefaultItemAnimator());
-        readingView.setAdapter(new LibraryReadingBookAdapter(data.getReading().getLeastFive(), new LibraryBookAdapterCallback() {
-            @Override
-            public void onItemClick(View v, int pos, LibraryUsersBook book) {
+        if (data.getReading().getTotal() > 0) {
+            readingView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
+            readingView.setItemAnimator(new DefaultItemAnimator());
+            readingView.setAdapter(new LibraryReadingBookAdapter(data.getReading().getLeastFive(), new LibraryBookAdapterCallback() {
+                @Override
+                public void onItemClick(View v, int pos, LibraryUsersBook book) {
 
-            }
-        }));
-        readingView.setVisibility(View.VISIBLE);
-        root.findViewById(R.id.tv_reading_book_empty).setVisibility(View.GONE);
+                }
+            }));
+            readingView.setVisibility(View.VISIBLE);
+            root.findViewById(R.id.tv_reading_book_empty).setVisibility(View.GONE);
+        }
 
-        reservingView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
-        reservingView.setItemAnimator(new DefaultItemAnimator());
-        reservingView.setAdapter(new LibraryReservingBookAdapter(data.getReserving().getLeastFive(), new LibraryBookAdapterCallback() {
-            @Override
-            public void onItemClick(View v, int pos, LibraryUsersBook book) {
+        if (data.getReserving().getTotal() > 0) {
+            reservingView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
+            reservingView.setItemAnimator(new DefaultItemAnimator());
+            reservingView.setAdapter(new LibraryReservingBookAdapter(data.getReserving().getLeastFive(), new LibraryBookAdapterCallback() {
+                @Override
+                public void onItemClick(View v, int pos, LibraryUsersBook book) {
 
-            }
-        }));
-        reservingView.setVisibility(View.VISIBLE);
-        root.findViewById(R.id.tv_reserving_book_empty).setVisibility(View.GONE);
+                }
+            }));
+            reservingView.setVisibility(View.VISIBLE);
+            root.findViewById(R.id.tv_reserving_book_empty).setVisibility(View.GONE);
+        }
 
-        favoriteView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
-        favoriteView.setItemAnimator(new DefaultItemAnimator());
-        favoriteView.setAdapter(new LibraryFavoriteBookAdapter(data.getFavorite().getLeastFive(), new LibraryBookAdapterCallback() {
-            @Override
-            public void onItemClick(View v, int pos, LibraryUsersBook book) {
+        if(data.getFavorite().getTotal() > 0) {
+            favoriteView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
+            favoriteView.setItemAnimator(new DefaultItemAnimator());
+            favoriteView.setAdapter(new LibraryFavoriteBookAdapter(data.getFavorite().getLeastFive(), new LibraryBookAdapterCallback() {
+                @Override
+                public void onItemClick(View v, int pos, LibraryUsersBook book) {
 
-            }
-        }));
-        favoriteView.setVisibility(View.VISIBLE);
-        root.findViewById(R.id.tv_favorite_book_empty).setVisibility(View.GONE);
+                }
+            }));
+            favoriteView.setVisibility(View.VISIBLE);
+            root.findViewById(R.id.tv_favorite_book_empty).setVisibility(View.GONE);
+        }
     }
 }
