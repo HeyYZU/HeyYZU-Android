@@ -32,6 +32,9 @@ import tw.bingluen.heyyzu.tool.ContextUtils;
 
 public class LibraryFragment extends Fragment {
 
+
+    private View root;
+
     private FloatingSearchView searchView;
     private LibraryDashboard dashboard;
     private CharSequence previousTitle;
@@ -39,7 +42,7 @@ public class LibraryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_library, container, false);
+        root = inflater.inflate(R.layout.fragment_library, container, false);
 
         final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         previousTitle =  toolbar.getTitle();
@@ -55,7 +58,7 @@ public class LibraryFragment extends Fragment {
 
         dashboard = new LibraryDashboard();
 
-        loadingDashboard(root);
+        loadingDashboard();
 
         return root;
     }
@@ -70,7 +73,7 @@ public class LibraryFragment extends Fragment {
         toolbar.setTitle(previousTitle);
     }
 
-    private void loadingDashboard(final View rootView) {
+    private void loadingDashboard() {
         String token = ContextUtils.getSP(this, SPKey.NAME, Context.MODE_PRIVATE).getString(SPKey.USER_ACCESS_TOKEN, "");
 
         Call<LibraryDashboard> callDashboard = HeyYZUAPIClient.get().libraryDashboard(token);
@@ -78,26 +81,29 @@ public class LibraryFragment extends Fragment {
         callDashboard.enqueue(new Callback<LibraryDashboard>() {
             @Override
             public void onResponse(Call<LibraryDashboard> call, Response<LibraryDashboard> response) {
+                root.findViewById(R.id.progressBar).setVisibility(View.GONE);
                 if (response.isSuccessful()) {
-                    Log.d("LibraryFragment", "Successful.");
-                    inflateDashboard(response.body(), rootView);
+                    inflateDashboard(response.body());
                 } else {
-                    Log.d("LibraryFragment", "dashboard response error.");
+                    handleError(response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<LibraryDashboard> call, Throwable t) {
-                Log.d("LibraryFragment", "Fail");
+                root.findViewById(R.id.progressBar).setVisibility(View.GONE);
+                handleError(0);
             }
         });
     }
 
-    private void inflateDashboard(LibraryDashboard data, View root) {
+    private void inflateDashboard(LibraryDashboard data) {
 
         final RecyclerView readingView = (RecyclerView) root.findViewById(R.id.recycler_view_reading_book);
         final RecyclerView reservingView = (RecyclerView) root.findViewById(R.id.recycler_view_reserving_book);
         final RecyclerView favoriteView = (RecyclerView) root.findViewById(R.id.recycler_view_favorite_book);
+
+        root.findViewById(R.id.view_library_dashboard).setVisibility(View.VISIBLE);
 
         if (data.getReading().getTotal() > 0) {
             readingView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
@@ -136,6 +142,31 @@ public class LibraryFragment extends Fragment {
             }));
             favoriteView.setVisibility(View.VISIBLE);
             root.findViewById(R.id.tv_favorite_book_empty).setVisibility(View.GONE);
+        }
+    }
+
+    private void handleError(int responseCode) {
+        switch (responseCode) {
+            case 400:
+                SimpleDialogFragment.getInstance(SimpleDialogFragment.ERROR_WITH_ONE_BUTTON)
+                        .setTitle(R.string.dialog_title_oops)
+                        .setMessage(R.string.dialog_message_token_expired)
+                        .setRightButtonText(R.string.btn_ok)
+                        .setRightButtonCallback(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FragmentHelper helper = (FragmentHelper) getActivity();
+                                helper.forceLogout();
+                            }
+                        });
+                break;
+            case 502:
+                root.findViewById(R.id.view_server_error).setVisibility(View.VISIBLE);
+                break;
+            case 0:
+            default:
+                root.findViewById(R.id.view_connect_error).setVisibility(View.VISIBLE);
+                break;
         }
     }
 }
