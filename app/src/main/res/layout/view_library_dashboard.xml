@@ -4,8 +4,9 @@
     android:layout_height="match_parent"
     android:layout_marginTop="56dp"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="@layout/fragment_library"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:id="@+id/view_library_dashboard"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -41,39 +42,43 @@
             android:text="@string/btn_view_all"
             style="@style/Library.Dashboard.Button" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/view_reading_list"
+        <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:cardUseCompatPadding="true"
+            android:id="@+id/view_reading_list"
+            app:layout_constraintTop_toBottomOf="@+id/ic_reading_book"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ic_reading_book"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="10dp">
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
-                android:visibility="gone"
-                android:id="@+id/recycler_view_reading_book"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                <android.support.v7.widget.RecyclerView
+                    android:visibility="gone"
+                    android:id="@+id/recycler_view_reading_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_reading_book_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/txt_library_no_reading_book"
-                android:drawableTop="@drawable/ic_empty_box"
-                android:drawablePadding="5dp"
-                />
-        </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_reading_book_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/txt_library_no_reading_book"
+                    android:drawableTop="@drawable/ic_empty_box"
+                    android:drawablePadding="5dp"
+                    android:layout_margin="20dp"
+                    />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
 
         <ImageView
             android:id="@+id/ic_reserving_book"
@@ -104,39 +109,46 @@
             style="@style/Library.Dashboard.Button"
             android:text="@string/btn_view_all"/>
 
-        <android.support.constraint.ConstraintLayout
+
+        <android.support.v7.widget.CardView
             android:id="@+id/view_reserving_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="100dp"
+            app:cardUseCompatPadding="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ic_reserving_book"
+            app:layout_constraintTop_toBottomOf="@+id/ic_reserving_book"
             android:layout_marginTop="10dp">
-            <android.support.v7.widget.RecyclerView
-                android:visibility="gone"
-                android:id="@+id/recycler_view_reserving_book"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="10dp"/>
 
-            <TextView
-                android:id="@+id/tv_reserving_book_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/txt_library_no_reserving_book"
-                android:drawableTop="@drawable/ic_empty_box"
-                android:drawablePadding="5dp"
-                />
-        </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.v7.widget.RecyclerView
+                    android:visibility="gone"
+                    android:id="@+id/recycler_view_reserving_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_reserving_book_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/txt_library_no_reserving_book"
+                    android:drawableTop="@drawable/ic_empty_box"
+                    android:drawablePadding="5dp"
+                    android:layout_margin="20dp"
+                    />
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
 
         <ImageView
             android:id="@+id/ic_favorite_book"
@@ -167,36 +179,42 @@
             style="@style/Library.Dashboard.Button"
             android:text="@string/btn_view_all"/>
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="100dp"
+            app:cardUseCompatPadding="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ic_favorite_book"
+            app:layout_constraintTop_toBottomOf="@+id/ic_favorite_book"
             android:layout_marginTop="10dp">
-            <android.support.v7.widget.RecyclerView
-                android:visibility="gone"
-                android:id="@+id/recycler_view_favorite_book"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <TextView
-                android:id="@+id/tv_favorite_book_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/txt_library_no_favorite_book"
-                android:drawableTop="@drawable/ic_empty_box"
-                android:drawablePadding="5dp"
-                />
-        </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.v7.widget.RecyclerView
+                    android:visibility="gone"
+                    android:id="@+id/recycler_view_favorite_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_favorite_book_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/txt_library_no_favorite_book"
+                    android:drawableTop="@drawable/ic_empty_box"
+                    android:drawablePadding="5dp"
+                    android:layout_margin="20dp"
+                    />
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
 
     </android.support.constraint.ConstraintLayout>
 
