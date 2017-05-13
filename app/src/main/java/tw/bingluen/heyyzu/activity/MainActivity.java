@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
         View.OnClickListener, FragmentHelper {
 
     private ViewPager navViewPager;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,9 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (currentFragment != null &&
+                currentFragment.getChildFragmentManager().getBackStackEntryCount() > 0) {
+            currentFragment.getChildFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
@@ -103,14 +107,16 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case COURSE_FRAGMENT:
+                currentFragment = ClassroomFragment.getInstance(key);
                 ft.addToBackStack("NavReplace")
-                        .replace(R.id.content_main, ClassroomFragment.getInstance(key))
+                        .replace(R.id.content_main, currentFragment)
                         .commit()
                         ;
                 break;
             case LIBRARY_FRAGMENT:
+                currentFragment = new LibraryFragment();
                 ft.addToBackStack("NavReplace")
-                        .replace(R.id.content_main, new LibraryFragment())
+                        .replace(R.id.content_main, currentFragment)
                         .commit()
                         ;
                 break;
@@ -185,6 +191,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void replaceContentFragment(Fragment fragment) {
+        currentFragment = fragment;
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack("FragmentReplace")
                 .replace(R.id.content_main, fragment)
