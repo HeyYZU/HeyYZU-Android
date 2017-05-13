@@ -10,7 +10,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,7 +130,7 @@ public abstract class CourseFragment extends Fragment {
 
             dataList = new ArrayList<>();
 
-            View root = inflater.inflate(R.layout.recycle_view, container, false);
+            View root = inflater.inflate(R.layout.fragment_course_recycler_view, container, false);
             recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
             progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
             exceptionView = root.findViewById(R.id.exception_view);
@@ -203,7 +202,7 @@ public abstract class CourseFragment extends Fragment {
 
             dataList = new ArrayList<>();
 
-            View root = inflater.inflate(R.layout.recycle_view, container, false);
+            View root = inflater.inflate(R.layout.fragment_course_recycler_view, container, false);
             recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
             progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
             exceptionView = root.findViewById(R.id.exception_view);
@@ -274,7 +273,7 @@ public abstract class CourseFragment extends Fragment {
 
             dataList = new ArrayList<>();
 
-            View root = inflater.inflate(R.layout.recycle_view, container, false);
+            View root = inflater.inflate(R.layout.fragment_course_recycler_view, container, false);
             recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
             progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
             exceptionView = root.findViewById(R.id.exception_view);
