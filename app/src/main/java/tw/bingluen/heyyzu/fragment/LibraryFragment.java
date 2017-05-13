@@ -36,7 +36,6 @@ public class LibraryFragment extends Fragment {
     private View root;
 
     private FloatingSearchView searchView;
-    private LibraryDashboard dashboard;
     private CharSequence previousTitle;
 
     @Nullable
@@ -55,8 +54,6 @@ public class LibraryFragment extends Fragment {
         viewSearchView.setElevation(appBarLayout.getElevation());
         searchView.setElevation(appBarLayout.getElevation());
         appBarLayout.setElevation(0);
-
-        dashboard = new LibraryDashboard();
 
         loadingDashboard();
 
@@ -103,7 +100,7 @@ public class LibraryFragment extends Fragment {
         final RecyclerView reservingView = (RecyclerView) root.findViewById(R.id.recycler_view_reserving_book);
         final RecyclerView favoriteView = (RecyclerView) root.findViewById(R.id.recycler_view_favorite_book);
 
-        root.findViewById(R.id.view_library_dashboard).setVisibility(View.VISIBLE);
+        root.findViewById(R.id.content_library).setVisibility(View.VISIBLE);
 
         if (data.getReading().getTotal() > 0) {
             readingView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
