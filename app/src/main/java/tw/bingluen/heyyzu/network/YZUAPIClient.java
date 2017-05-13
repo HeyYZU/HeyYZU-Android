@@ -1,6 +1,7 @@
 package tw.bingluen.heyyzu.network;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Credentials;
 import okhttp3.Interceptor;
@@ -12,14 +13,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import tw.bingluen.heyyzu.constant.YZUSecret;
 import tw.bingluen.heyyzu.model.AccessToken;
 import tw.bingluen.heyyzu.model.PublicKey;
+import tw.bingluen.heyyzu.model.library.LibrarySearchResult;
 
 public class YZUAPIClient {
 
-    private static final String API_BASE_URL = "https://unipop.yzu.edu.tw/YzuPortalAPI/";
+    private static final String API_BASE_URL = "https://unipop.yzu.edu.tw/";
 
     private static Retrofit retrofit;
     private static YZUAPIService sYZUAPIService;
@@ -67,18 +71,22 @@ public class YZUAPIClient {
 
     public interface YZUAPIService {
         @FormUrlEncoded
-        @POST("./api/Auth/RSAkeybyAppID")
+        @POST("./YzuPortalAPI/api/Auth/RSAkeybyAppID")
         Call<PublicKey> publicKey(
                 @Field("AppID") String appId
         );
 
         @FormUrlEncoded
-        @POST("./api/Auth/UserAccessToken")
+        @POST("./YzuPortalAPI/api/Auth/UserAccessToken")
         Call<AccessToken> accessToken(
                 @Field("AppID") String appId,
                 @Field("account") String encryptUsername,
                 @Field("password") String encryptPassword
         );
 
+        @GET("./OpenAPI/api/lib/keyword/title={keyword}")
+        Call<List<LibrarySearchResult>> search(
+                @Path("keyword") String keyword
+        );
     }
 }

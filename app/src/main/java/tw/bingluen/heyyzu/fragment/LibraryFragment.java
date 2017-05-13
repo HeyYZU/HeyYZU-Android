@@ -1,6 +1,7 @@
 package tw.bingluen.heyyzu.fragment;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,10 +29,13 @@ import tw.bingluen.heyyzu.adapter.LibraryBookAdapterCallback;
 import tw.bingluen.heyyzu.adapter.LibraryFavoriteBookAdapter;
 import tw.bingluen.heyyzu.adapter.LibraryReadingBookAdapter;
 import tw.bingluen.heyyzu.adapter.LibraryReservingBookAdapter;
+import tw.bingluen.heyyzu.adapter.LibrarySearchResultAdapter;
 import tw.bingluen.heyyzu.constant.SPKey;
 import tw.bingluen.heyyzu.model.library.LibraryDashboard;
+import tw.bingluen.heyyzu.model.library.LibrarySearchResult;
 import tw.bingluen.heyyzu.model.library.LibraryUsersBook;
 import tw.bingluen.heyyzu.network.HeyYZUAPIClient;
+import tw.bingluen.heyyzu.network.YZUAPIClient;
 import tw.bingluen.heyyzu.tool.ContextUtils;
 
 public class LibraryFragment extends Fragment {
@@ -56,6 +64,8 @@ public class LibraryFragment extends Fragment {
         appBarLayout.setElevation(0);
 
         loadingDashboard();
+
+        setupSearchView();
 
         return root;
     }
@@ -90,6 +100,38 @@ public class LibraryFragment extends Fragment {
             public void onFailure(Call<LibraryDashboard> call, Throwable t) {
                 root.findViewById(R.id.progressBar).setVisibility(View.GONE);
                 handleError(0);
+            }
+        });
+    }
+
+    private void loadingSearchSuggestion(String keyword) {
+        searchView.showProgress();
+
+        Call<List<LibrarySearchResult>> callSearch = YZUAPIClient.get().search(keyword);
+
+        callSearch.enqueue(new Callback<List<LibrarySearchResult>>() {
+            @Override
+            public void onResponse(Call<List<LibrarySearchResult>> call, Response<List<LibrarySearchResult>> response) {
+                searchView.hideProgress();
+                if (response.isSuccessful()) {
+                    if (searchResultList == null) {
+                        searchResultList = response.body();
+                    } else {
+                        searchResultList.clear();
+                        searchResultList.addAll(response.body());
+                    }
+                    searchView.swapSuggestions(
+                            searchResultList.subList(0, Math.min(searchResultList.size(), 5))
+                    );
+                } else {
+                    searchView.clearSuggestions();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<LibrarySearchResult>> call, Throwable t) {
+                searchView.hideProgress();
+                searchView.clearSuggestions();
             }
         });
     }
@@ -140,6 +182,84 @@ public class LibraryFragment extends Fragment {
             favoriteView.setVisibility(View.VISIBLE);
             root.findViewById(R.id.tv_favorite_book_empty).setVisibility(View.GONE);
         }
+    }
+
+    private List<LibrarySearchResult> searchResultList;
+    private LibrarySearchResultFragment searchResultFragment;
+
+    private void setupSearchView() {
+        searchView = (FloatingSearchView) root.findViewById(R.id.searchView);
+
+        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, String newQuery) {
+                String[] keywords = newQuery.split(" ");
+
+                if (searchResultList == null || searchResultList.size() == 0) {
+                    if (newQuery.length() < 4) return;
+                    loadingSearchSuggestion(newQuery);
+                } else if (newQuery.length() == 0) {
+                    searchResultList.clear();
+                    searchView.swapSuggestions(searchResultList);
+                    return;
+                } else if (keywords.length > oldQuery.split(" ").length && oldQuery.length() < newQuery.length() && newQuery.contains(oldQuery)) {
+                    List<LibrarySearchResult> filtered = new ArrayList<>();
+                    for (LibrarySearchResult item : searchResultList) {
+                        if (containsKeyword(keywords, item.getTitle())) {
+                            filtered.add(item);
+                        }
+                    }
+                    searchView.swapSuggestions(filtered.subList(0, Math.min(filtered.size(), 5)));
+                } else if (keywords.length < oldQuery.split(" ").length && oldQuery.length() > newQuery.length() && oldQuery.contains(newQuery)) {
+                    List<LibrarySearchResult> filtered = new ArrayList<>();
+                    for (LibrarySearchResult item : searchResultList) {
+                        if (containsKeyword(keywords, item.getTitle())) {
+                            filtered.add(item);
+                        }
+                    }
+                    searchView.swapSuggestions(filtered.subList(0, Math.min(filtered.size(), 5)));
+                } else {
+                    if (newQuery.length() < 4) {
+                        searchView.clearSuggestions();
+                        return;
+                    }
+                    loadingSearchSuggestion(newQuery);
+                }
+            }
+        });
+
+        searchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+            }
+
+            @Override
+            public void onSearchAction(String currentQuery) {
+                if (searchResultFragment == null) {
+                    searchResultFragment = LibrarySearchResultFragment.getInstance(searchResultList, new LibrarySearchResultAdapter.LibrarySearchResultAdapterCallback() {
+                        @Override
+                        public void onItemClick(View v, int pos, LibrarySearchResult item) {
+
+                        }
+                    });
+
+                    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                    ft.addToBackStack("LibrarySearch")
+                            .replace(R.id.content_library, searchResultFragment)
+                            .commit();
+                } else {
+                    searchResultFragment.updateList(searchResultList);
+                }
+            }
+        });
+    }
+
+    private boolean containsKeyword(String[] keywords, String bookTitle) {
+        for (String keyword:keywords) {
+            if (bookTitle.toLowerCase().contains(keyword.toLowerCase())) return true;
+        }
+        return false;
     }
 
     private void handleError(int responseCode) {
