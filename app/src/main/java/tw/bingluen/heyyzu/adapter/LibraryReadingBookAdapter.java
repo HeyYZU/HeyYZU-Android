@@ -40,6 +40,7 @@ public class LibraryReadingBookAdapter extends RecyclerView.Adapter<LibraryReadi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final int pos = position;
         final LibraryUsersBook book = bookList.get(position);
         holder.bookName.setText(book.getTitle());
         final long dueCountDown = book.getAttr().getDueDate() - (System.currentTimeMillis() / 1000);
@@ -73,6 +74,13 @@ public class LibraryReadingBookAdapter extends RecyclerView.Adapter<LibraryReadi
             ));
             holder.bookDue.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onItemClick(v, pos, book);
+            }
+        });
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

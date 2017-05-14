@@ -199,6 +199,11 @@ public class MainActivity extends AppCompatActivity
                 ;
     }
 
+    @Override
+    public void openActivity(Intent i) {
+        startActivity(i);
+    }
+
     /**
      * Interface - FragmentHelper.
      * forceLogout user.

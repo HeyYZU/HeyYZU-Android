@@ -17,7 +17,7 @@ public class LibraryBook extends LibraryBookBase {
     private String index;
     @SerializedName("isbn")
     @Expose
-    private Integer isbn;
+    private long isbn;
     @SerializedName("cover")
     @Expose
     private String cover;
@@ -49,11 +49,11 @@ public class LibraryBook extends LibraryBookBase {
         this.index = index;
     }
 
-    public Integer getIsbn() {
+    public long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(long isbn) {
         this.isbn = isbn;
     }
 

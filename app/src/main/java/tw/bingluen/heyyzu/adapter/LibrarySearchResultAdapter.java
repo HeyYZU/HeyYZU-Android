@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import tw.bingluen.heyyzu.R;
+import tw.bingluen.heyyzu.fragment.SimpleDialogFragment;
 import tw.bingluen.heyyzu.model.library.LibrarySearchResult;
 
 public class LibrarySearchResultAdapter extends RecyclerView.Adapter<LibrarySearchResultAdapter.ViewHolder> {

@@ -16,6 +16,7 @@ import tw.bingluen.heyyzu.constant.HeyYZUSecret;
 import tw.bingluen.heyyzu.model.course.CourseAnnouncement;
 import tw.bingluen.heyyzu.model.course.CourseHomework;
 import tw.bingluen.heyyzu.model.course.CourseMaterial;
+import tw.bingluen.heyyzu.model.library.LibraryBook;
 import tw.bingluen.heyyzu.model.library.LibraryDashboard;
 import tw.bingluen.heyyzu.model.library.LibraryUsersBook;
 import tw.bingluen.heyyzu.model.user.Curriculum;
@@ -100,6 +101,11 @@ public class HeyYZUAPIClient {
         );
         @GET("./library/favorite")
         Call<List<LibraryUsersBook>> libraryFavorite(
+                @Query("access_token") String accessToken
+        );
+        @GET("./library/book/{id}")
+        Call<LibraryBook> libraryBook(
+                @Path("id") String id,
                 @Query("access_token") String accessToken
         );
 

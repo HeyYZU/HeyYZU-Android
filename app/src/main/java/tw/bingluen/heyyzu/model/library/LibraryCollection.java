@@ -13,7 +13,14 @@ public class LibraryCollection {
     private String collection;
     @SerializedName("reservingCount")
     @Expose
-    private Integer reservingCount;
+    private int reservingCount;
+
+    @SerializedName("return")
+    @Expose
+    private long returnTime;
+
+    @SerializedName("attr")
+    private LibraryBookAttribute attribute;
 
     public String getBranch() {
         return branch;
@@ -31,12 +38,27 @@ public class LibraryCollection {
         this.collection = collection;
     }
 
-    public Integer getReservingCount() {
+    public int getReservingCount() {
         return reservingCount;
     }
 
-    public void setReservingCount(Integer reservingCount) {
+    public void setReservingCount(int reservingCount) {
         this.reservingCount = reservingCount;
     }
 
+    public LibraryBookAttribute getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(LibraryBookAttribute attribute) {
+        this.attribute = attribute;
+    }
+
+    public long getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(long returnTime) {
+        this.returnTime = returnTime;
+    }
 }

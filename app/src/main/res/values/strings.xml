@@ -29,6 +29,7 @@
     <string name="hint_library_search">Search books...</string>
 
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_showBook">Collection Info.</string>
     <string name="title_fragment_library">Library</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -92,8 +93,19 @@
     <string name="txt_library_no_reserving_book">Nothing is reserving.</string>
     <string name="txt_library_no_favorite_book">Nothing on your collection.</string>
     
+    <string name="txt_library_no_entity_book">There is not entity book on library.</string>
+    
     <string name="txt_library_reserving_available_to_pick_up">Available now (Reserved until %1$s)</string>
     <string name="txt_library_reserving_order">Order %1$d</string>
 
-
+    <string name="txt_library_book_status_loaned_out">Loaned out</string>
+    <string name="txt_library_book_status_on_shelf">On shelf</string>
+    <string name="txt_library_book_reserving_count">Hold %1$d</string>
+    <string name="txt_library_book_status_cataloging">Cataloging</string>
+    
+    <string name="txt_library_book_isbn">ISBN</string>
+    <string name="txt_library_book_index">Call No.</string>
+    <string name="txt_library_book_author">Author</string>
+    <string name="txt_library_book_publisher">Publisher</string>
+    <string name="txt_library_book_year">Year</string>
 </resources>

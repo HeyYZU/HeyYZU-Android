@@ -41,6 +41,7 @@ public class LibraryReservingBookAdapter extends RecyclerView.Adapter<LibraryRes
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final int pos = position;
         final LibraryUsersBook book = bookList.get(position);
         holder.bookName.setText(book.getTitle());
         if (book.getAttr().getReservedBefore() != 0) {
@@ -57,6 +58,13 @@ public class LibraryReservingBookAdapter extends RecyclerView.Adapter<LibraryRes
                     book.getAttr().getOrder()
             ));
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onItemClick(v, pos, book);
+            }
+        });
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

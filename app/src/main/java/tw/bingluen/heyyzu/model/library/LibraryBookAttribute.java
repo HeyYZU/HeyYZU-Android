@@ -30,6 +30,10 @@ public class LibraryBookAttribute {
     @Expose
     private long reservedBefore;
 
+    @SerializedName("type")
+    @Expose
+    private String type;
+
     public Integer getDueDate() {
         return dueDate;
     }
@@ -94,4 +98,11 @@ public class LibraryBookAttribute {
         this.reservedBefore = reservedBefore;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }
