@@ -31,7 +31,7 @@ public class LibrarySearchResultFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.fragment_library_search_result, container, false);
+        final View root = inflater.inflate(R.layout.recycler_view, container, false);
         final RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(ContextUtils.getContext(this)));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
