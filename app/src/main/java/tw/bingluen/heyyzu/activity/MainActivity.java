@@ -120,8 +120,6 @@ public class MainActivity extends AppCompatActivity
                         .commit()
                         ;
                 break;
-            case CALENDAR_FRAGMENT:
-                break;
             default:
                 return;
         }

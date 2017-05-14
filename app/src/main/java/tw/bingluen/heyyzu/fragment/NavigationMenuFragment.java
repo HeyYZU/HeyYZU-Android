@@ -91,7 +91,6 @@ public class NavigationMenuFragment extends Fragment {
         menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_home, false, false, null));
         menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_course, false, true, null));
         menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_library, false, false, null));
-        menuItemList.add(NavigationMenuItem.getInstance(R.string.navigation_menu_calendar, false, false, null));
 
         navMenuProgressBar.setVisibility(View.GONE);
 
@@ -107,9 +106,6 @@ public class NavigationMenuFragment extends Fragment {
                         break;
                     case 2:
                         navigationCallback.switchContentFragment(NavigationCallback.LIBRARY_FRAGMENT, null);
-                        break;
-                    case 3:
-                        navigationCallback.switchContentFragment(NavigationCallback.CALENDAR_FRAGMENT, null);
                         break;
                     default:
                         break;
@@ -169,8 +165,7 @@ public class NavigationMenuFragment extends Fragment {
         int HOME_FRAGMENT = -1;
         int COURSE_FRAGMENT = 0;
         int LIBRARY_FRAGMENT = 1;
-        int CALENDAR_FRAGMENT = 2;
-        @IntDef({HOME_FRAGMENT, COURSE_FRAGMENT, LIBRARY_FRAGMENT, CALENDAR_FRAGMENT})
+        @IntDef({HOME_FRAGMENT, COURSE_FRAGMENT, LIBRARY_FRAGMENT})
         @interface TargetFragment{}
 
         int MAIN_NAVIGATION = 0;
@@ -183,11 +178,11 @@ public class NavigationMenuFragment extends Fragment {
         void switchNavigationPage(@TargetNavigation int targetNav);
     }
 
-    public static class CourseKeys {
-        public String courseId;
-        public String courseName;
+    static class CourseKeys {
+        String courseId;
+        String courseName;
 
-        public CourseKeys(String courseId, String courseName) {
+        CourseKeys(String courseId, String courseName) {
             this.courseId = courseId;
             this.courseName = courseName;
         }
