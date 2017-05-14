@@ -6,12 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import android.widget.TextView;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -58,17 +55,11 @@ public class LibraryFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_library, container, false);
 
-        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        previousTitle =  toolbar.getTitle();
-        toolbar.setTitle(R.string.title_fragment_library);
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) getActivity().findViewById(R.id.collapsing_toolbar);
+        previousTitle =  collapsingToolbarLayout.getTitle();
+        collapsingToolbarLayout.setTitle(getString(R.string.title_fragment_library));
 
-        final View viewSearchView = root.findViewById(R.id.view_searchView);
         searchView = (FloatingSearchView) root.findViewById(R.id.searchView);
-
-        final AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appBarLayout);
-        viewSearchView.setElevation(appBarLayout.getElevation());
-        searchView.setElevation(appBarLayout.getElevation());
-        appBarLayout.setElevation(0);
 
         loadingDashboard();
 
@@ -80,11 +71,8 @@ public class LibraryFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        final AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appBarLayout);
-        appBarLayout.setElevation(searchView.getElevation());
-
-        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(previousTitle);
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) getActivity().findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle(previousTitle);
     }
 
     private void loadingDashboard() {

@@ -4,19 +4,16 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import tw.bingluen.heyyzu.R;
 
@@ -25,7 +22,6 @@ public class ClassroomFragment extends Fragment {
     private String lessonID;
     private String lessonName;
     private CharSequence previousToolbarTitle;
-    private TabLayout tabLayout;
 
     public static ClassroomFragment getInstance(Object keys) {
         ClassroomFragment fragment = new ClassroomFragment();
@@ -39,20 +35,16 @@ public class ClassroomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_course, container, false);
         final ViewPager viewPager = (ViewPager) root.findViewById(R.id.course_viewPager);
-        tabLayout = (TabLayout) root.findViewById(R.id.course_tabLayout);
+        TabLayout tabLayout = (TabLayout) root.findViewById(R.id.course_tabLayout);
 
         viewPager.setAdapter(new CourseFragmentAdapter(getChildFragmentManager()));
         viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager, true);
 
-        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        final AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appBarLayout);
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) getActivity().findViewById(R.id.collapsing_toolbar);
 
-        previousToolbarTitle = toolbar.getTitle();
-        toolbar.setTitle(this.lessonName);
-
-        tabLayout.setElevation(appBarLayout.getElevation());
-        appBarLayout.setElevation(0);
+        previousToolbarTitle = collapsingToolbarLayout.getTitle();
+        collapsingToolbarLayout.setTitle(this.lessonName);
 
         return root;
     }
@@ -60,11 +52,8 @@ public class ClassroomFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(previousToolbarTitle);
-
-        final AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appBarLayout);
-        appBarLayout.setElevation(tabLayout.getElevation());
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) getActivity().findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle(previousToolbarTitle);
     }
 
     class CourseFragmentAdapter extends FragmentPagerAdapter {

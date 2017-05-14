@@ -27,7 +27,7 @@
         <activity
             android:name=".activity.ShowBookActivity"
             android:label="@string/title_activity_showBook"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.ShowBook" />
     </application>
 
 </manifest>
