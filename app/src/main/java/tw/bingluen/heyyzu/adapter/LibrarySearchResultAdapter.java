@@ -2,7 +2,6 @@ package tw.bingluen.heyyzu.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import tw.bingluen.heyyzu.R;
-import tw.bingluen.heyyzu.fragment.SimpleDialogFragment;
 import tw.bingluen.heyyzu.model.library.LibrarySearchResult;
 
 public class LibrarySearchResultAdapter extends RecyclerView.Adapter<LibrarySearchResultAdapter.ViewHolder> {

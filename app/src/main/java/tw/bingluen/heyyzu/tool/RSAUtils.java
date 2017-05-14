@@ -5,12 +5,11 @@ import android.util.Base64;
 
 import java.math.BigInteger;
 import java.security.KeyFactory;
+import java.security.PublicKey;
 import java.security.spec.RSAPublicKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
-
-import java.security.PublicKey;
-import java.security.spec.X509EncodedKeySpec;
 
 
 public class RSAUtils {

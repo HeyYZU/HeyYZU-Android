@@ -13,7 +13,6 @@ import java.util.Locale;
 
 import tw.bingluen.heyyzu.R;
 import tw.bingluen.heyyzu.model.library.LibraryUsersBook;
-import tw.bingluen.heyyzu.tool.ContextUtils;
 
 public class LibraryReadingBookAdapter extends RecyclerView.Adapter<LibraryReadingBookAdapter.ViewHolder> {
 

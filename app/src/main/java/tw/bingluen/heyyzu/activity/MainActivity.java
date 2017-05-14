@@ -3,12 +3,10 @@ package tw.bingluen.heyyzu.activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -24,7 +22,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import tw.bingluen.heyyzu.R;
 import tw.bingluen.heyyzu.constant.SPKey;
@@ -33,7 +30,6 @@ import tw.bingluen.heyyzu.fragment.FragmentHelper;
 import tw.bingluen.heyyzu.fragment.LibraryFragment;
 import tw.bingluen.heyyzu.fragment.NavigationMenuFragment;
 import tw.bingluen.heyyzu.fragment.SimpleDialogFragment;
-import tw.bingluen.heyyzu.tool.ContextUtils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationMenuFragment.NavigationCallback,
