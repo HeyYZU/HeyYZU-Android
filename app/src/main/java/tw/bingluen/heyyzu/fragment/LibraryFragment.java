@@ -14,12 +14,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -104,38 +108,6 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    private void loadingSearchSuggestion(String keyword) {
-        searchView.showProgress();
-
-        Call<List<LibrarySearchResult>> callSearch = YZUAPIClient.get().search(keyword);
-
-        callSearch.enqueue(new Callback<List<LibrarySearchResult>>() {
-            @Override
-            public void onResponse(Call<List<LibrarySearchResult>> call, Response<List<LibrarySearchResult>> response) {
-                searchView.hideProgress();
-                if (response.isSuccessful()) {
-                    if (searchResultList == null) {
-                        searchResultList = response.body();
-                    } else {
-                        searchResultList.clear();
-                        searchResultList.addAll(response.body());
-                    }
-                    searchView.swapSuggestions(
-                            searchResultList.subList(0, Math.min(searchResultList.size(), 5))
-                    );
-                } else {
-                    searchView.clearSuggestions();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<LibrarySearchResult>> call, Throwable t) {
-                searchView.hideProgress();
-                searchView.clearSuggestions();
-            }
-        });
-    }
-
     private void inflateDashboard(LibraryDashboard data) {
 
         final RecyclerView readingView = (RecyclerView) root.findViewById(R.id.recycler_view_reading_book);
@@ -182,6 +154,29 @@ public class LibraryFragment extends Fragment {
             favoriteView.setVisibility(View.VISIBLE);
             root.findViewById(R.id.tv_favorite_book_empty).setVisibility(View.GONE);
         }
+
+        ((TextView) root.findViewById(R.id.tv_reading_book)).setText(
+                String.format(Locale.getDefault(),
+                        getString(R.string.txt_library_reading_book),
+                        data.getReading().getTotal()
+                )
+        );
+
+        ((TextView) root.findViewById(R.id.tv_reserving_book)).setText(
+                String.format(Locale.getDefault(),
+                        getString(R.string.txt_library_reserving_book),
+                        data.getReserving().getTotal()
+                )
+        );
+
+
+
+        ((TextView) root.findViewById(R.id.tv_favorite_book)).setText(
+                String.format(Locale.getDefault(),
+                        getString(R.string.txt_library_favorite_book),
+                        data.getFavorite().getTotal()
+                )
+        );
     }
 
     private List<LibrarySearchResult> searchResultList;
@@ -190,69 +185,73 @@ public class LibraryFragment extends Fragment {
     private void setupSearchView() {
         searchView = (FloatingSearchView) root.findViewById(R.id.searchView);
 
-        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @Override
-            public void onSearchTextChanged(String oldQuery, String newQuery) {
-                String[] keywords = newQuery.split(" ");
-
-                if (searchResultList == null || searchResultList.size() == 0) {
-                    if (newQuery.length() < 4) return;
-                    loadingSearchSuggestion(newQuery);
-                } else if (newQuery.length() == 0) {
-                    searchResultList.clear();
-                    searchView.swapSuggestions(searchResultList);
-                    return;
-                } else if (keywords.length > oldQuery.split(" ").length && oldQuery.length() < newQuery.length() && newQuery.contains(oldQuery)) {
-                    List<LibrarySearchResult> filtered = new ArrayList<>();
-                    for (LibrarySearchResult item : searchResultList) {
-                        if (containsKeyword(keywords, item.getTitle())) {
-                            filtered.add(item);
-                        }
-                    }
-                    searchView.swapSuggestions(filtered.subList(0, Math.min(filtered.size(), 5)));
-                } else if (keywords.length < oldQuery.split(" ").length && oldQuery.length() > newQuery.length() && oldQuery.contains(newQuery)) {
-                    List<LibrarySearchResult> filtered = new ArrayList<>();
-                    for (LibrarySearchResult item : searchResultList) {
-                        if (containsKeyword(keywords, item.getTitle())) {
-                            filtered.add(item);
-                        }
-                    }
-                    searchView.swapSuggestions(filtered.subList(0, Math.min(filtered.size(), 5)));
-                } else {
-                    if (newQuery.length() < 4) {
-                        searchView.clearSuggestions();
-                        return;
-                    }
-                    loadingSearchSuggestion(newQuery);
-                }
-            }
-        });
-
         searchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
-
+                return;
             }
 
             @Override
             public void onSearchAction(String currentQuery) {
-                if (searchResultFragment == null) {
-                    searchResultFragment = LibrarySearchResultFragment.getInstance(searchResultList, new LibrarySearchResultAdapter.LibrarySearchResultAdapterCallback() {
-                        @Override
-                        public void onItemClick(View v, int pos, LibrarySearchResult item) {
+                root.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+                root.findViewById(R.id.view_server_error).setVisibility(View.GONE);
+                root.findViewById(R.id.view_connect_error).setVisibility(View.GONE);
+                root.findViewById(R.id.content_library).setVisibility(View.GONE);
 
+                Call<List<LibrarySearchResult>> callSearch = YZUAPIClient.get().search(currentQuery);
+
+                callSearch.enqueue(new Callback<List<LibrarySearchResult>>() {
+                    @Override
+                    public void onResponse(Call<List<LibrarySearchResult>> call, Response<List<LibrarySearchResult>> response) {
+                        root.findViewById(R.id.progressBar).setVisibility(View.GONE);
+
+                        if (response.isSuccessful()) {
+                            if (searchResultList == null) {
+                                searchResultList = response.body();
+                            } else {
+                                searchResultList.clear();
+                                searchResultList.addAll(response.body());
+                            }
+                            Collections.sort(searchResultList, new Comparator<LibrarySearchResult>() {
+                                @Override
+                                public int compare(LibrarySearchResult o1, LibrarySearchResult o2) {
+                                    return (int) (o2.getId() - o1.getId());
+                                }
+                            });
+                            showSearchResult();
+                            root.findViewById(R.id.content_library).setVisibility(View.VISIBLE);
+                        } else {
+                            handleError(response.code());
+                            searchView.clearSuggestions();
                         }
-                    });
+                    }
 
-                    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-                    ft.addToBackStack("LibrarySearch")
-                            .replace(R.id.content_library, searchResultFragment)
-                            .commit();
-                } else {
-                    searchResultFragment.updateList(searchResultList);
-                }
+                    @Override
+                    public void onFailure(Call<List<LibrarySearchResult>> call, Throwable t) {
+                        handleError(0);
+                        searchView.clearSuggestions();
+                    }
+                });
             }
         });
+    }
+
+    private void showSearchResult() {
+        if (searchResultFragment == null) {
+            searchResultFragment = LibrarySearchResultFragment.getInstance(searchResultList, new LibrarySearchResultAdapter.LibrarySearchResultAdapterCallback() {
+                @Override
+                public void onItemClick(View v, int pos, LibrarySearchResult item) {
+
+                }
+            });
+
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            ft.addToBackStack("LibrarySearch")
+                    .replace(R.id.content_library, searchResultFragment)
+                    .commit();
+        } else {
+            searchResultFragment.updateList(searchResultList);
+        }
     }
 
     private boolean containsKeyword(String[] keywords, String bookTitle) {
