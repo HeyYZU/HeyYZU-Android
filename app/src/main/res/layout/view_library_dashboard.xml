@@ -73,6 +73,7 @@
                 android:drawableTop="@drawable/ic_empty_box"
                 android:drawablePadding="5dp"
                 android:layout_margin="20dp"
+                android:gravity="center_horizontal"
                 />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
@@ -143,6 +144,7 @@
                 android:drawableTop="@drawable/ic_empty_box"
                 android:drawablePadding="5dp"
                 android:layout_margin="20dp"
+                android:gravity="center_horizontal"
                 />
         </android.support.constraint.ConstraintLayout>
 
@@ -216,6 +218,7 @@
                 android:drawableTop="@drawable/ic_empty_box"
                 android:drawablePadding="5dp"
                 android:layout_margin="20dp"
+                android:gravity="center_horizontal"
                 />
 
         </android.support.constraint.ConstraintLayout>

@@ -26,9 +26,9 @@
     <string name="dialog_message_token_expired">Token is expired, please login again.</string>
 
     <string name="toast_message_username_or_password_is_empty">Username or Password is EMPTY!</string>
-    <string name="hint_library_search">Search books...</string>
+    <string name="hint_library_search">Search books&#8230;</string>
 
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main" translatable="false">HeyYZU</string>
     <string name="title_activity_showBook">Collection Info.</string>
     <string name="title_fragment_library">Library</string>
 
@@ -54,8 +54,6 @@
     <string name="homework_deadline_has_been_close_txt">Has been close on %1$s.</string>
 
     <!-- course homework -->
-    <string name="txt_homework_deadline_after">Deadline in %1$d</string>
-    <string name="txt_homework_deadline_closing">It was closing on %1$s</string>
     <string name="txt_homework_subject">Title</string>
     <string name="txt_homework_schedule">Schedule</string>
     <string name="txt_homework_description">Description</string>
@@ -66,8 +64,6 @@
     <string name="txt_homework_grade">Grade and Comment</string>
     <string name="txt_homework_no_comment">No comment</string>
     <string name="txt_homework_empty">Have not assign anything.</string>
-
-    <string name="txt_homework_countdown">%1$d day(s)</string>
 
     <string name="txt_material_handout">Handout</string>
     <string name="txt_material_link">Link</string>
@@ -103,7 +99,7 @@
     <string name="txt_library_book_reserving_count">Hold %1$d</string>
     <string name="txt_library_book_status_cataloging">Cataloging</string>
     
-    <string name="txt_library_book_isbn">ISBN</string>
+    <string name="txt_library_book_isbn" translatable="false">ISBN</string>
     <string name="txt_library_book_index">Call No.</string>
     <string name="txt_library_book_author">Author</string>
     <string name="txt_library_book_publisher">Publisher</string>
